@@ -1,7 +1,9 @@
 package com.example.myapp.business.service.JWT;
 
+import com.example.myapp.business.service.ILogAccessService;
 import com.example.myapp.persistence.JWT.JwtRequest;
 import com.example.myapp.persistence.JWT.JwtResponse;
+import com.example.myapp.persistence.model.LogAccess;
 import com.example.myapp.persistence.model.Utilisateur;
 import com.example.myapp.persistence.repository.UtilisateurRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,9 @@ public class JwtService implements UserDetailsService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ILogAccessService iLogAccessService;
 
     public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
         String userName = jwtRequest.getUserName();
@@ -71,8 +76,17 @@ public class JwtService implements UserDetailsService {
     private void authenticate(String userName, String userPassword) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, userPassword));
+            String code_success="Authentification succeded";
+//            LogAccess logAccess=new LogAccess();
+//            logAccess.setCodeAccess(code_success);
+//            logAccess.setUsername(userName);
+//            logAccess.setDateAuth();
+            iLogAccessService.saveLogAccess(code_success,userName);
         } catch (DisabledException e) {
+            String code_erreur="Authentification failed";
+            iLogAccessService.saveLogAccess(code_erreur,userName);
             throw new Exception("USER_DISABLED", e);
+
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
