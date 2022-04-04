@@ -83,11 +83,12 @@ public class JwtService implements UserDetailsService {
 //            logAccess.setDateAuth();
             iLogAccessService.saveLogAccess(code_success,userName);
         } catch (DisabledException e) {
-            String code_erreur="Authentification failed";
-            iLogAccessService.saveLogAccess(code_erreur,userName);
             throw new Exception("USER_DISABLED", e);
 
         } catch (BadCredentialsException e) {
+
+            String code_erreur="Authentification failed";
+            iLogAccessService.saveLogAccess(code_erreur,userName);
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }

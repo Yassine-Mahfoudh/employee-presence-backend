@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class UtilisateurController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Utilisateur addUtilisateur(@RequestBody Utilisateur obj){
        try{
@@ -66,8 +68,21 @@ public class UtilisateurController {
         try {
             Utilisateur updateUtilisateur = iUtilisateurService.updateUtilisateur(obj, id);
         return new ResponseEntity<>(updateUtilisateur, HttpStatus.OK);
-    }catch(Exception e){
+    }
+        catch(Exception e){
         throw new IllegalStateException("Error UtilisateurController in method updateUtilisateur:" +e.toString());
+        }
     }
+
+    @GetMapping({"/forUser"})
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String forUser(){
+        return" this URL is only accessible to the user";
+    }
+    @GetMapping({"/forAdmin"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String forAdmin(){
+        return" this URL is only accessible to the admin";
+    }
+
 }
-    }

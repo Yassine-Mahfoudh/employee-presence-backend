@@ -80,7 +80,7 @@ public class UtilisateurService implements IUtilisateurService {
                 "MANAGER"
         );
         profilRepository.saveAll(
-                List.of(adminRole, RhRole,simpleUserRole,adminRole)
+                List.of(adminRole, RhRole,simpleUserRole,managerRole)
         );
 
         Utilisateur RhUser = new Utilisateur(
@@ -126,19 +126,22 @@ public class UtilisateurService implements IUtilisateurService {
         managerUser.setProfils(managerRoles);
 
         utilisateurRepository.saveAll(
-                List.of(adminUser,RhUser)
+                List.of(adminUser,RhUser,simpleUser,managerUser)
         );
     }
 
     @Override
     public Utilisateur addUtilisateur(Utilisateur obj) {
         try {
+            Profil role = profilRepository.findProfilByType("USER");
+            Set<Profil> userRoles = new HashSet<>();
+            userRoles.add(role);
             Utilisateur objNomUnique = utilisateurRepository.findUtilisateurByuserName(obj.getUserName());
             if (objNomUnique != null)
                 throw new IllegalStateException("Utilisateur login token");
             obj.setDatecreation(new Timestamp(new Date().getTime()));
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
-
+            obj.setProfils(userRoles);
             return utilisateurRepository.save(obj);
         } catch (Exception e) {
             throw  new IllegalStateException("Error UtilisateurService in method addUtilisateur " + e.toString());

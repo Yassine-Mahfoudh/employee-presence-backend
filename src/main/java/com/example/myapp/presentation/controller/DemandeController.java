@@ -19,7 +19,7 @@ import java.util.List;
 public class DemandeController {
     private final IDemandeService iDemandeService;
 
-    @PreAuthorize("hasAnyRole('ROLE_RH')")
+    @PreAuthorize("hasAnyRole('ROLE_User')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Demande> getListDemande() {
         try {
