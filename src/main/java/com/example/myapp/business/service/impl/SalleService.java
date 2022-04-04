@@ -20,6 +20,7 @@ import java.util.List;
 public class SalleService implements ISalleService {
     public final SalleRepository salleRepository;
 
+
     @Override
     public List<Salle> getListSalle() {
         try {
