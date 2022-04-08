@@ -59,13 +59,11 @@ public class ProfilService implements IProfilService {
 
     @Transactional
     @Override
-    public Profil updateProfil(Profil profil,Long id) {
+    public Profil updateProfil(Profil profil) {
         try {
-            Profil upprof = profilRepository.findProfilById(id);
+            Profil upprof = profilRepository.findProfilById(profil.getId());
             upprof.setType(profil.getType());
             upprof.setDateupdate(new Timestamp(new Date().getTime()));
-            upprof.setId(id);
-
             return profilRepository.save(upprof);
         }
         catch (Exception e) {

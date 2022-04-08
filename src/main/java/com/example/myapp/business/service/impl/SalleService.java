@@ -64,16 +64,14 @@ public class SalleService implements ISalleService {
     }
     @Transactional
     @Override
-    public Salle updateSalle(Salle salle,Long id) {
+    public Salle updateSalle(Salle salle) {
         try {
-            Salle ups = salleRepository.findSalleById(id);
+            Salle ups = salleRepository.findSalleById(salle.getId());
             ups.setNum(salle.getNum());
             ups.setNbposte(salle.getNbposte());
             ups.setType(salle.getType());
             ups.setPourcentagePres(salle.getPourcentagePres());
             ups.setDateupdate(new Timestamp(new Date().getTime()));
-            ups.setId(id);
-
             return salleRepository.save(ups);
         }
         catch (Exception e) {

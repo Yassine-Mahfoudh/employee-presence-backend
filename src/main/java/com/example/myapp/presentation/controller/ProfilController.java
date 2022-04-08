@@ -1,9 +1,7 @@
 package com.example.myapp.presentation.controller;
 
 
-import com.example.myapp.business.service.IDemandeService;
 import com.example.myapp.business.service.IProfilService;
-import com.example.myapp.persistence.model.Demande;
 import com.example.myapp.persistence.model.Profil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,10 +45,10 @@ public class ProfilController {
         }
     }
 
-    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Profil> updateProfil(@RequestBody Profil profil, @PathVariable("id") Long id) {
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Profil> updateProfil(@RequestBody Profil profil) {
         try {
-            Profil updateProfil = iProfilService.updateProfil(profil, id);
+            Profil updateProfil = iProfilService.updateProfil(profil);
             return new ResponseEntity<>(updateProfil, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProfilController in method updateProfil :: " + e.toString());

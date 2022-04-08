@@ -42,7 +42,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors();
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers(HttpMethod.POST,"/authenticate").permitAll()
-                //.antMatchers(HttpMethod.GET,"/utilisateur").permitAll()
+                .antMatchers(HttpMethod.GET,"/salle").permitAll()
+                .antMatchers(HttpMethod.POST,"/salle/add").permitAll()
+                .antMatchers(HttpMethod.PUT,"/salle/update").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/salle/delete/*").permitAll()
+
+
+
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()
                 .and()

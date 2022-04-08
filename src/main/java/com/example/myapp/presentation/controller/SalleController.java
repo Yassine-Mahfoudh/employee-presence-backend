@@ -19,7 +19,6 @@ import java.util.List;
 public class SalleController {
     private final ISalleService iSalleService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Salle> getListSalle() {
         try {
@@ -48,10 +47,10 @@ public class SalleController {
         }
     }
 
-    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle, @PathVariable("id") Long id) {
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle) {
         try {
-            Salle updateS = iSalleService.updateSalle(salle, id);
+            Salle updateS = iSalleService.updateSalle(salle);
             return new ResponseEntity<>(updateS, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error SalleController in method updateSalle :: " + e.toString());
