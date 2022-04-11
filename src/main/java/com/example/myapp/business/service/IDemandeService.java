@@ -10,7 +10,7 @@ public interface IDemandeService {
     public Demande getDemandeById(Long id);
     public Demande addDemande(Demande dem);
     public void deleteDemandeById(Long id);
-    public Demande updateDemandeById(Demande demande,Long id);
+    public Demande updateDemandeById(Demande demande);
 
 
 

@@ -53,13 +53,13 @@ public class DemandeService implements IDemandeService {
     @Override
     public Demande addDemande(Demande dem) {
         try {
-            Demande objNomUnique = demandeRepository.findDemandeByNom(dem.getNom());
+            Demande objNomUnique = demandeRepository.findDemandeByName(dem.getName());
 
             if ( objNomUnique != null)
                 throw new IllegalStateException("Demande name token");
 
-                dem.setDatecreation(new Timestamp(new Date().getTime()));
-            log.info("Saving new demade {} to the databse ",dem.getNom());
+                dem.setCreationdate(new Timestamp(new Date().getTime()));
+            log.info("Saving new demade {} to the databse ",dem.getName());
             return demandeRepository.save(dem);
         } catch (Exception e) {
             throw new IllegalStateException("Error DemandeService in method addDemande :: " + e.toString());
@@ -67,14 +67,13 @@ public class DemandeService implements IDemandeService {
     }
 
     @Override
-    public Demande updateDemandeById(Demande demande,Long id) {
+    public Demande updateDemandeById(Demande demande) {
         try {
-            Demande updem = demandeRepository.findDemandeById(id);
-            updem.setNom(demande.getNom());
-            updem.setMotif(demande.getMotif());
-            updem.setDateupdate(new Timestamp(new Date().getTime()));
-            updem.setId(id);
-            log.info("updating  demade {} to the databse ",demande.getNom());
+            Demande updem = demandeRepository.findDemandeById(demande.getId());
+            updem.setName(demande.getName());
+            updem.setMotive(demande.getMotive());
+            updem.setUpdatedate(new Timestamp(new Date().getTime()));
+            log.info("updating  demade {} to the databse ",demande.getName());
 
             return demandeRepository.save(updem);
         }

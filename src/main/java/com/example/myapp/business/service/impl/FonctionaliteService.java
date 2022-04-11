@@ -48,12 +48,12 @@ public class FonctionaliteService implements IFonctionaliteService {
     @Override
     public Fonctionalite addFonctionalite(Fonctionalite fonctionalite) {
         try {
-            Fonctionalite objNomUnique = fonctionaliteRepository.findFonctionaliteByNom(fonctionalite.getNom());
+            Fonctionalite objNomUnique = fonctionaliteRepository.findFonctionaliteByName(fonctionalite.getName());
 
             if ( objNomUnique != null)
                 throw new IllegalStateException("Fonctionalite name token");
 
-            fonctionalite.setDatecreation(new Timestamp(new Date().getTime()));
+            fonctionalite.setCreationdate(new Timestamp(new Date().getTime()));
 
             return fonctionaliteRepository.save(fonctionalite);
         } catch (Exception e) {
@@ -65,9 +65,9 @@ public class FonctionaliteService implements IFonctionaliteService {
     public Fonctionalite updateFonctionalite(Fonctionalite fonctionalite,Long id) {
         try {
             Fonctionalite upfonc = fonctionaliteRepository.findFonctionaliteById(id);
-            upfonc.setNom(fonctionalite.getNom());
+            upfonc.setName(fonctionalite.getName());
             upfonc.setDesignation(fonctionalite.getDesignation());
-            upfonc.setDateupdate(new Timestamp(new Date().getTime()));
+            upfonc.setUpdatedate(new Timestamp(new Date().getTime()));
             upfonc.setId(id);
 
             return fonctionaliteRepository.save(upfonc);

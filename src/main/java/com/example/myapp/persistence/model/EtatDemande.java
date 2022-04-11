@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,19 +32,22 @@ public class EtatDemande implements Serializable {
             generator = "etatDemande_sequence"
     )
     private Long id;
-    @Column(name = "Statut")
-    private String statut;
+    @Column(name = "Status")
+    private String status;
+
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
+
+
 
     @OneToMany
     @JoinColumn(name = "etat_id", insertable = false, updatable = false)
     private Set<Demande> demandes;
 
-    public EtatDemande(String statut) {
-        this.statut = statut;
+    public EtatDemande(String status) {
+        this.status = status;
     }
 
 

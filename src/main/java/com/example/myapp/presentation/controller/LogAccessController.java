@@ -2,7 +2,6 @@ package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.ILogAccessService;
 import com.example.myapp.persistence.model.LogAccess;
-import com.example.myapp.persistence.model.Projet;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;

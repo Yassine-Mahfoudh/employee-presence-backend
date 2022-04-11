@@ -44,13 +44,13 @@ public class Utilisateur {
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "DATE_CREATION")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "DATE_UPDATE")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
 
     @OneToOne
     @JoinColumn(name = "ID_EMP")

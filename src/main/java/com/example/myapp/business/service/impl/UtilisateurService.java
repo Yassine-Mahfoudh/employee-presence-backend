@@ -108,6 +108,9 @@ public class UtilisateurService implements IUtilisateurService {
                 new HashSet<Profil>()
         );
 
+        Set<Profil> simpleUserRoles = new HashSet<>();
+        simpleUserRoles.add(simpleUserRole);
+        simpleUser.setProfils(simpleUserRoles);
 
         Set<Profil> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
@@ -115,11 +118,9 @@ public class UtilisateurService implements IUtilisateurService {
 
         Set<Profil> RhRoles = new HashSet<>();
         RhRoles.add(RhRole);
+        RhRoles.add(simpleUserRole);
         RhUser.setProfils(RhRoles);
 
-        Set<Profil> simpleUserRoles = new HashSet<>();
-        simpleUserRoles.add(simpleUserRole);
-        simpleUser.setProfils(simpleUserRoles);
 
         Set<Profil> managerRoles = new HashSet<>();
         managerRoles.add(managerRole);
@@ -133,13 +134,13 @@ public class UtilisateurService implements IUtilisateurService {
     @Override
     public Utilisateur addUtilisateur(Utilisateur obj) {
         try {
-            Profil role = profilRepository.findProfilByType("USER");
+            Profil role = profilRepository.findProfilByName("USER");
             Set<Profil> userRoles = new HashSet<>();
             userRoles.add(role);
             Utilisateur objNomUnique = utilisateurRepository.findUtilisateurByuserName(obj.getUserName());
             if (objNomUnique != null)
                 throw new IllegalStateException("Utilisateur login token");
-            obj.setDatecreation(new Timestamp(new Date().getTime()));
+            obj.setCreationdate(new Timestamp(new Date().getTime()));
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
             obj.setProfils(userRoles);
             return utilisateurRepository.save(obj);
@@ -156,7 +157,7 @@ public class UtilisateurService implements IUtilisateurService {
            obj.setUserName(utilisateur.getUserName());
            obj.setUserPassword(getEncodedPassword(utilisateur.getUserPassword()));
            obj.setEmail(utilisateur.getEmail());
-           obj.setDateupdate(new Timestamp(new Date().getTime()));
+           obj.setUpdatedate(new Timestamp(new Date().getTime()));
            obj.setId(id);
             return utilisateurRepository.save(obj);
         } catch (Exception e) {

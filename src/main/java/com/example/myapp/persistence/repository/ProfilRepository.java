@@ -11,7 +11,7 @@ public interface ProfilRepository extends JpaRepository<Profil,Long> {
     @Query("select p from Profil p where p.id=:id")
     public Profil findProfilById(@Param("id") Long id);
 
-    @Query("select p from Profil p where p.type=:type")
-    public Profil findProfilByType(@Param("type") String type);
+    @Query("select p from Profil p where p.name=:name")
+    public Profil findProfilByName(@Param("name") String name);
 
 }

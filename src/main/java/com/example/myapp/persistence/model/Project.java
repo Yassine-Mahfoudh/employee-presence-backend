@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Projet {
+public class Project {
     @SequenceGenerator(
             name = "projet_sequence",
             sequenceName ="projet_sequence",
@@ -33,40 +33,40 @@ public class Projet {
     @Id
     @Column(name="ID_PROJET", unique = true, nullable = false)
     private Long id;
-    @Column(name = "NOM")
-    private String nom;
-    @Column(name = "PRIORITE")
-    private int priorite;
-    @Column(name = "DESCRIPTION")
+    @Column(name = "Name")
+    private String name;
+    @Column(name = "Priority")
+    private int priority;
+    @Column(name = "Description")
     private String description;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "DATE_DEBUT")
-    private LocalDate datedebut;
+    @Column(name = "Start_date")
+    private LocalDate startdate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "DATE_FIN")
-    private LocalDate datefin;
+    @Column(name = "End_date")
+    private LocalDate enddate;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_update")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_PROJET")
+    @JoinColumn(name = "ID_PROJECT")
     private Set<Employee> employees;
 
-    public Projet(String nom, int priorite, String description, LocalDate datedebut, LocalDate datefin) {
-        this.nom = nom;
-        this.priorite = priorite;
+    public Project(String name, int priority, String description, LocalDate startdate, LocalDate enddate) {
+        this.name = name;
+        this.priority = priority;
         this.description = description;
-        this.datedebut = datedebut;
-        this.datefin = datefin;
-
+        this.startdate = startdate;
+        this.enddate = enddate;
     }
 }

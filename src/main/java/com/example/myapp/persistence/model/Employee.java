@@ -35,28 +35,28 @@ public class Employee implements Serializable {
             generator = "employee_sequence"
     )
     private Long id;
-    @Column(name = "Nom_employee")
-    private String nom;
-    @Column(name = "Prenom_employee")
-    private String prenom;
-    @Column(name = "Role_employee")
+    @Column(name = "Employee_name")
+    private String name;
+    @Column(name = "Employee_lastname")
+    private String lastname;
+    @Column(name = "Employee_role")
     private String role;
-    @Column(name = "Etat_employee")
-    private Boolean etat;
-    @Column(name = "Date_naiss")
-    private LocalDate datenaiss;
-    @Column(name = "Adresse_employee")
-    private String adresse;
+    @Column(name = "Employee")
+    private Boolean status;
+    @Column(name = "Birth_date")
+    private LocalDate birthdate;
+    @Column(name = "Employee_address")
+    private String address;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_update")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
 
 
     @OneToOne(mappedBy = "employee")
@@ -64,8 +64,8 @@ public class Employee implements Serializable {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
-    @JoinColumn(name = "projet_id", insertable = false, updatable = false)
-    private Projet projet;
+    @JoinColumn(name = "project_id", insertable = false, updatable = false)
+    private Project project;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
@@ -77,12 +77,12 @@ public class Employee implements Serializable {
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String nom, String prenom, String role, Boolean etat, LocalDate datenaiss, String adresse) {
-        this.nom = nom;
-        this.prenom = prenom;
+    public Employee(String name, String lastname, String role, Boolean status, LocalDate birthdate, String address) {
+        this.name = name;
+        this.lastname = lastname;
         this.role = role;
-        this.etat = etat;
-        this.datenaiss = datenaiss;
-        this.adresse = adresse;
+        this.status = status;
+        this.birthdate = birthdate;
+        this.address = address;
     }
 }

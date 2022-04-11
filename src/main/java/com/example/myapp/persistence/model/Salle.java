@@ -31,15 +31,15 @@ public class Salle {
             generator = "salle_sequence"
     )
     @Id
-    @Column(name="ID_SALLE")
+    @Column(name="Id_salle")
     private Long id;
-    @Column(name="TYPE")
+    @Column(name="Type")
     private String type;
-    @Column(name="NUM")
+    @Column(name="Number")
     private int num;
-    @Column(name="NB_POSTE")
+    @Column(name="Desks_number")
     private int nbposte;
-    @Column(name="POURCENTAGEPRES")
+    @Column(name="Attendance_percentage")
     private int pourcentagePres;
 
     @CreationTimestamp

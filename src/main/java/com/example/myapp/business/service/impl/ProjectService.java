@@ -1,8 +1,8 @@
 package com.example.myapp.business.service.impl;
 
-import com.example.myapp.business.service.IProjetService;
-import com.example.myapp.persistence.model.Projet;
-import com.example.myapp.persistence.repository.ProjetRepository;
+import com.example.myapp.business.service.IProjectService;
+import com.example.myapp.persistence.model.Project;
+import com.example.myapp.persistence.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ import java.util.Date;
 import java.util.List;
 @AllArgsConstructor
 @Service
-public class ProjetService implements IProjetService {
-    public final ProjetRepository projetRepository;
+public class ProjectService implements IProjectService {
+    public final ProjectRepository projectRepository;
 
     @Override
-    public List<Projet> getListProjet() {
+    public List<Project> getListProjet() {
         try {
-            return projetRepository.findAll();
+            return projectRepository.findAll();
         } catch (Exception e){
             throw new IllegalStateException("Error ProjetService in method getListProjet :: " + e.toString());
 
@@ -26,13 +26,13 @@ public class ProjetService implements IProjetService {
     }
 
     @Override
-    public Projet getProjetById(Long id){
+    public Project getProjetById(Long id){
         try {
             if (id == null)
-                return new Projet();
-            Projet d = projetRepository.findProjetById(id);
+                return new Project();
+            Project d = projectRepository.findProjectById(id);
             if (d == null)
-                return new Projet();
+                return new Project();
             return d;
         } catch (Exception e){
             throw new IllegalStateException("Error ProjetService in method getProjetById :: " + e.toString());
@@ -42,16 +42,16 @@ public class ProjetService implements IProjetService {
 
 
     @Override
-    public Projet addProjet(Projet projet) {
+    public Project addProjet(Project projet) {
         try {
-            Projet objNomUnique = projetRepository.findProjetByNom(projet.getNom());
+            Project objNomUnique = projectRepository.findProjectByName(projet.getName());
 
             if ( objNomUnique != null)
                 throw new IllegalStateException("Projet name token");
 
-            projet.setDatecreation(new Timestamp(new Date().getTime()));
+            projet.setCreationdate(new Timestamp(new Date().getTime()));
 
-            return projetRepository.save(projet);
+            return projectRepository.save(projet);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProjetService in method addProjet :: " + e.toString());
         }
@@ -60,18 +60,18 @@ public class ProjetService implements IProjetService {
 
     @Transactional
     @Override
-    public Projet updateProjet(Projet projet,Long id) {
+    public Project updateProjet(Project project, Long id) {
         try {
-            Projet upproj = projetRepository.findProjetById(id);
-            upproj.setNom(projet.getNom());
-            upproj.setDatedebut(projet.getDatedebut());
-            upproj.setDatefin(projet.getDatefin());
-            upproj.setDescription(projet.getDescription());
-            upproj.setPriorite(projet.getPriorite());
-            upproj.setDateupdate(new Timestamp(new Date().getTime()));
+            Project upproj = projectRepository.findProjectById(id);
+            upproj.setName(project.getName());
+            upproj.setStartdate(project.getStartdate());
+            upproj.setEnddate(project.getEnddate());
+            upproj.setDescription(project.getDescription());
+            upproj.setPriority(project.getPriority());
+            upproj.setUpdatedate(new Timestamp(new Date().getTime()));
             upproj.setId(id);
 
-            return projetRepository.save(upproj);
+            return projectRepository.save(upproj);
         }
         catch (Exception e) {
             throw new IllegalStateException("Error ProjetService in method updateProjet :: " + e.toString());
@@ -82,7 +82,7 @@ public class ProjetService implements IProjetService {
     @Override
     public void deleteProjet(Long id) {
         try {
-            projetRepository.deleteById(id);
+            projectRepository.deleteById(id);
         }
         catch (Exception e) {
             throw new IllegalStateException("Error ProjetService in method deleteProjet :: " + e.toString());

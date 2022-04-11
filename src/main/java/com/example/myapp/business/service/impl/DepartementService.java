@@ -43,12 +43,12 @@ public class DepartementService implements IDepartementService {
     @Override
     public Departement addDepartement(Departement dep) {
         try {
-            Departement depNomUnique = departementRepository.findDepartementByNom(dep.getNom());
+            Departement depNomUnique = departementRepository.findDepartementByName(dep.getName());
 
             if ( depNomUnique != null)
                 throw new IllegalStateException("Departement name token");
 
-            dep.setDatecreation(new Timestamp(new Date().getTime()));
+            dep.setCreationdate(new Timestamp(new Date().getTime()));
 
             return departementRepository.save(dep);
         } catch (Exception e) {
@@ -60,9 +60,9 @@ public class DepartementService implements IDepartementService {
     public Departement updateDepartementById(Departement departement,Long id) {
         try {
             Departement updep = departementRepository.findDepartementById(id);
-            updep.setNom(departement.getNom());
+            updep.setName(departement.getName());
             updep.setNbsalles(departement.getNbsalles());
-            updep.setDateupdate(new Timestamp(new Date().getTime()));
+            updep.setUpdatedate(new Timestamp(new Date().getTime()));
             updep.setId(id);
 
             return departementRepository.save(updep);

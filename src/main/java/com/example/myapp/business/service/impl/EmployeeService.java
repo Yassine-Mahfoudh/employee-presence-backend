@@ -45,12 +45,12 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee addEmployee(Employee emp) {
         try {
-            Employee empNomUnique = employeeRepository.findEmployeeByNom(emp.getNom());
+            Employee empNomUnique = employeeRepository.findEmployeeByName(emp.getName());
 
             if ( empNomUnique != null)
                 throw new IllegalStateException("Employee name token");
 
-            emp.setDatecreation(new Timestamp(new Date().getTime()));
+            emp.setCreationdate(new Timestamp(new Date().getTime()));
 
             return employeeRepository.save(emp);
         } catch (Exception e) {
@@ -62,14 +62,14 @@ public class EmployeeService implements IEmployeeService {
     public Employee updateEmployeeById(Employee employee,Long id) {
         try {
             Employee upemp = employeeRepository.findEmployeeById(id);
-            upemp.setNom(employee.getNom());
-            upemp.setPrenom(employee.getPrenom());
+            upemp.setName(employee.getName());
+            upemp.setLastname(employee.getLastname());
             upemp.setRole(employee.getRole());
-            upemp.setEtat(employee.getEtat());
-            upemp.setDatenaiss(employee.getDatenaiss());
-            upemp.setAdresse(employee.getAdresse());
+            upemp.setStatus(employee.getStatus());
+            upemp.setBirthdate(employee.getBirthdate());
+            upemp.setAddress(employee.getAddress());
 
-            upemp.setDateupdate(new Timestamp(new Date().getTime()));
+            upemp.setUpdatedate(new Timestamp(new Date().getTime()));
             upemp.setId(id);
 
             return employeeRepository.save(upemp);

@@ -32,27 +32,27 @@ public class Demande implements Serializable {
             generator = "Demande_sequence"
     )
     private Long id;
-    @Column(name = "Nom_demande")
-    private String nom;
-    @Column(name = "Motif_demande")
-    private String motif;
+    @Column(name = "Name")
+    private String name;
+    @Column(name = "Motive")
+    private String motive;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_update")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_debut")
-    private LocalDate datedebut;
+    @Column(name = "Start_date")
+    private LocalDate startdate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_fin")
-    private LocalDate datefin;
+    @Column(name = "End_date")
+    private LocalDate enddate;
 
     //    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
@@ -68,11 +68,10 @@ public class Demande implements Serializable {
     private Employee employee;
 
 
-
-    public Demande(String nom, String motif, LocalDate datedebut, LocalDate datefin) {
-        this.nom = nom;
-        this.motif = motif;
-        this.datedebut = datedebut;
-        this.datefin = datefin;
+    public Demande(String name, String motive, LocalDate startdate, LocalDate enddate) {
+        this.name = name;
+        this.motive = motive;
+        this.startdate = startdate;
+        this.enddate = enddate;
     }
 }

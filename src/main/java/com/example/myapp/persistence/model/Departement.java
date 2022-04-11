@@ -31,27 +31,28 @@ public class Departement implements Serializable {
             generator = "departement_sequence"
     )
     private Long id;
-    @Column(name = "Nom_departement")
-    private String nom;
+    @Column(name = "Department_name")
+    private String name;
     @Column(name = "Nombre_salle")
     private int nbsalles;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_update")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
+
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "dep_id")
     private Set<Salle> Salles;
 
-    public Departement(String nom, int nbsalles) {
-        this.nom = nom;
+    public Departement(String name, int nbsalles) {
+        this.name = name;
         this.nbsalles = nbsalles;
     }
 }

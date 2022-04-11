@@ -44,12 +44,12 @@ public class ProfilService implements IProfilService {
     @Override
     public Profil addProfil(Profil profil) {
         try {
-            Profil objNomUnique = profilRepository.findProfilByType(profil.getType());
+            Profil objNomUnique = profilRepository.findProfilByName(profil.getName());
 
             if ( objNomUnique != null)
                 throw new IllegalStateException("Profil name token");
 
-            profil.setDatecreation(new Timestamp(new Date().getTime()));
+            profil.setCreationdate(new Timestamp(new Date().getTime()));
 
             return profilRepository.save(profil);
         } catch (Exception e) {
@@ -62,8 +62,8 @@ public class ProfilService implements IProfilService {
     public Profil updateProfil(Profil profil) {
         try {
             Profil upprof = profilRepository.findProfilById(profil.getId());
-            upprof.setType(profil.getType());
-            upprof.setDateupdate(new Timestamp(new Date().getTime()));
+            upprof.setName(profil.getName());
+            upprof.setUpdatedate(new Timestamp(new Date().getTime()));
             return profilRepository.save(upprof);
         }
         catch (Exception e) {

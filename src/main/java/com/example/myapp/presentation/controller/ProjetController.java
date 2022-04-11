@@ -1,7 +1,7 @@
 package com.example.myapp.presentation.controller;
 
-import com.example.myapp.business.service.IProjetService;
-import com.example.myapp.persistence.model.Projet;
+import com.example.myapp.business.service.IProjectService;
+import com.example.myapp.persistence.model.Project;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping(path = "/projet")
 @AllArgsConstructor
 public class ProjetController {
-    private final IProjetService iProjetService;
+    private final IProjectService iProjetService;
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Projet> getListProjet() {
+    public List<Project> getListProjet() {
         try {
             return iProjetService.getListProjet();
         } catch (Exception e) {
@@ -26,9 +26,9 @@ public class ProjetController {
     }
 
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Projet> getProjetById(@PathVariable("id") Long id) {
+    public ResponseEntity<Project> getProjetById(@PathVariable("id") Long id) {
         try {
-            Projet projet = iProjetService.getProjetById(id);
+            Project projet = iProjetService.getProjetById(id);
             return new ResponseEntity<>(projet, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProjetController in method getProjetById :: " + e.toString());
@@ -36,7 +36,7 @@ public class ProjetController {
     }
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Projet addProjet(@RequestBody Projet projet) {
+    public Project addProjet(@RequestBody Project projet) {
         try {
             return iProjetService.addProjet(projet);
         } catch (Exception e) {
@@ -45,9 +45,9 @@ public class ProjetController {
     }
 
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Projet> updateProjet(@RequestBody Projet projet, @PathVariable("id") Long id) {
+    public ResponseEntity<Project> updateProjet(@RequestBody Project projet, @PathVariable("id") Long id) {
         try {
-            Projet updateProjet = iProjetService.updateProjet(projet, id);
+            Project updateProjet = iProjetService.updateProjet(projet, id);
             return new ResponseEntity<>(updateProjet, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProjetController in method updateProjet :: " + e.toString());

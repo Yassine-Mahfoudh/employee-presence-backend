@@ -9,6 +9,6 @@ public interface FonctionaliteRepository extends JpaRepository<Fonctionalite,Lon
     @Query("select f from Fonctionalite f where f.id=:id")
     public Fonctionalite findFonctionaliteById(@Param("id") Long id);
 
-    @Query("select f from Fonctionalite f where f.nom=:nom")
-    public Fonctionalite findFonctionaliteByNom(@Param("nom") String nom);
+    @Query("select f from Fonctionalite f where f.name=:name")
+    public Fonctionalite findFonctionaliteByName(@Param("name") String name);
 }

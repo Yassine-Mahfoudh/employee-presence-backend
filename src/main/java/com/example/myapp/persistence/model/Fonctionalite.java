@@ -37,27 +37,27 @@ public class Fonctionalite implements Serializable {
     @Id
     @Column(name="ID_FONCTIONALITE", unique = true, nullable = false)
     private Long id;
-    @Column(name = "Nom", nullable = false)
-    private String nom;
+    @Column(name = "Name", nullable = false)
+    private String name;
     @Column(name = "Designation")
     private String designation;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_update")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
 
     @ManyToMany(fetch = EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Profil> profils = new ArrayList<>();
 
-    public Fonctionalite(String nom, String designation) {
-        this.nom = nom;
+    public Fonctionalite(String name, String designation) {
+        this.name = name;
         this.designation = designation;
     }
 

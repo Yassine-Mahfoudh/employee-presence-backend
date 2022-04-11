@@ -35,26 +35,26 @@ public class Profil {
             generator = "profil_sequence"
     )
     @Id
-    @Column(name="ID_PROFIL", unique = true, nullable = false)
+    @Column(name="Id_profil", unique = true, nullable = false)
     private Long id;
-    @Column(name = "TYPE")
-    private String type;
+    @Column(name = "Name")
+    private String name;
 
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_creation")
-    private Timestamp datecreation;
+    @Column(name = "Creation_date")
+    private Timestamp creationdate;
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "Date_update")
-    private Timestamp dateupdate;
+    @Column(name = "Update_date")
+    private Timestamp updatedate;
 
     @ManyToMany(fetch = EAGER)
     private Collection<Fonctionalite> fonctionalites = new ArrayList<>();
 
-    public Profil(String type) {
-        this.type = type;
+    public Profil(String name) {
+        this.name = name;
     }
 }

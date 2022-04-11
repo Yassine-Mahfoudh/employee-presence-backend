@@ -11,6 +11,6 @@ public interface DepartementRepository  extends JpaRepository<Departement,Long> 
     @Query("select d from Departement d where d.id=:id ")
     public Departement findDepartementById(@Param("id") Long id);
 
-    @Query("select d from Departement d where d.nom=:nom ")
-    public Departement findDepartementByNom(@Param("nom") String nom);
+    @Query("select d from Departement d where d.name=:name ")
+    public Departement findDepartementByName(@Param("name") String name);
 }
