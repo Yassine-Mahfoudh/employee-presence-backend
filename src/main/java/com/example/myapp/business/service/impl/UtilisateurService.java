@@ -1,8 +1,10 @@
 package com.example.myapp.business.service.impl;
 
 import com.example.myapp.business.service.IUtilisateurService;
+import com.example.myapp.persistence.model.Employee;
 import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.model.Utilisateur;
+import com.example.myapp.persistence.repository.EmployeeRepository;
 import com.example.myapp.persistence.repository.ProfilRepository;
 import com.example.myapp.persistence.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +33,9 @@ public class UtilisateurService implements IUtilisateurService {
 
     @Autowired
     private ProfilRepository profilRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
 
     public List<Utilisateur> getListUtilisateur(){
@@ -108,6 +114,27 @@ public class UtilisateurService implements IUtilisateurService {
                 new HashSet<Profil>()
         );
 
+        Employee Yassine = new Employee(
+                "Yassine",
+                "Mahfoudh",
+                "admin",
+                Boolean.TRUE,
+                LocalDate.of(2000, 6, 29),
+                "68 dar chaabene"
+        );
+        Employee Houssem = new Employee(
+                "Houssem",
+                "Hmida",
+                "RH",
+                Boolean.FALSE,
+                LocalDate.of(2000, 4, 2),
+                "14 sfax"
+        );
+
+        employeeRepository.saveAll(
+                List.of(Yassine, Houssem)
+        );
+
         Set<Profil> simpleUserRoles = new HashSet<>();
         simpleUserRoles.add(simpleUserRole);
         simpleUser.setProfils(simpleUserRoles);
@@ -115,11 +142,13 @@ public class UtilisateurService implements IUtilisateurService {
         Set<Profil> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
         adminUser.setProfils(adminRoles);
+        adminUser.setEmployee(Yassine);
 
         Set<Profil> RhRoles = new HashSet<>();
         RhRoles.add(RhRole);
         RhRoles.add(simpleUserRole);
         RhUser.setProfils(RhRoles);
+        RhUser.setEmployee(Houssem);
 
 
         Set<Profil> managerRoles = new HashSet<>();
