@@ -35,13 +35,13 @@ public class Employee implements Serializable {
             generator = "employee_sequence"
     )
     private Long id;
-    @Column(name = "Employee_name")
-    private String name;
     @Column(name = "Employee_lastname")
     private String lastname;
+    @Column(name = "Employee_firstname")
+    private String firstname;
     @Column(name = "Employee_role")
     private String role;
-    @Column(name = "Employee")
+    @Column(name = "Employee_status")
     private Boolean status;
     @Column(name = "Birth_date")
     private LocalDate birthdate;
@@ -77,9 +77,9 @@ public class Employee implements Serializable {
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String name, String lastname, String role, Boolean status, LocalDate birthdate, String address) {
-        this.name = name;
+    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address) {
         this.lastname = lastname;
+        this.firstname = firstname;
         this.role = role;
         this.status = status;
         this.birthdate = birthdate;

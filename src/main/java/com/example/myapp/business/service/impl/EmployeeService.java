@@ -45,7 +45,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee addEmployee(Employee emp) {
         try {
-            Employee empNomUnique = employeeRepository.findEmployeeByName(emp.getName());
+            Employee empNomUnique = employeeRepository.findEmployeeByLastname(emp.getLastname());
 
             if ( empNomUnique != null)
                 throw new IllegalStateException("Employee name token");
@@ -62,8 +62,8 @@ public class EmployeeService implements IEmployeeService {
     public Employee updateEmployeeById(Employee employee,Long id) {
         try {
             Employee upemp = employeeRepository.findEmployeeById(id);
-            upemp.setName(employee.getName());
             upemp.setLastname(employee.getLastname());
+            upemp.setFirstname(employee.getFirstname());
             upemp.setRole(employee.getRole());
             upemp.setStatus(employee.getStatus());
             upemp.setBirthdate(employee.getBirthdate());
