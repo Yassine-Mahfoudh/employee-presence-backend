@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
 public class ProjetController {
     private final IProjectService iProjetService;
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> getListProjet() {
         try {
@@ -25,6 +28,7 @@ public class ProjetController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> getProjetById(@PathVariable("id") Long id) {
         try {
@@ -35,6 +39,7 @@ public class ProjetController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Project addProjet(@RequestBody Project projet) {
         try {
@@ -44,6 +49,7 @@ public class ProjetController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> updateProjet(@RequestBody Project projet, @PathVariable("id") Long id) {
         try {
@@ -54,6 +60,7 @@ public class ProjetController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteProjet(@PathVariable("id") Long id) {
         try {

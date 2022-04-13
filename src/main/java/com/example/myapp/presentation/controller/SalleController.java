@@ -19,6 +19,7 @@ import java.util.List;
 public class SalleController {
     private final ISalleService iSalleService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Salle> getListSalle() {
         try {
@@ -28,6 +29,7 @@ public class SalleController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Salle> getSalleById(@PathVariable("id") Long id) {
         try {
@@ -38,6 +40,7 @@ public class SalleController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Salle addSalle(@RequestBody Salle salle) {
         try {
@@ -47,6 +50,7 @@ public class SalleController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle) {
         try {
@@ -57,6 +61,7 @@ public class SalleController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteSalle(@PathVariable("id") Long id) {
         try {

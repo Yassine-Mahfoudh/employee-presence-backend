@@ -19,7 +19,7 @@ import java.util.List;
 public class DemandeController {
     private final IDemandeService iDemandeService;
 
-    //@PreAuthorize("hasAnyRole('ROLE_User')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Demande> getListDemande() {
         try {
@@ -30,7 +30,7 @@ public class DemandeController {
         }
     }
 
-   // @PreAuthorize("hasAnyRole('ROLE_RH')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Demande> getDemandeById(@PathVariable("id") Long id) {
         try {
@@ -40,7 +40,7 @@ public class DemandeController {
             throw new IllegalStateException("Error DemandeController in method getDemandeById :: " + e.toString());
         }
     }
-   // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Demande addDemande(@RequestBody Demande demande) {
         try {
@@ -50,7 +50,7 @@ public class DemandeController {
         }
     }
 
-   // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Demande> updateDemandeById(@RequestBody Demande demande) {
         try {
@@ -60,7 +60,7 @@ public class DemandeController {
             throw new IllegalStateException("Error DemandeController in method updateDemandeById :: " + e.toString());
         }
     }
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDemandeById(@PathVariable("id") Long id) {
         try {

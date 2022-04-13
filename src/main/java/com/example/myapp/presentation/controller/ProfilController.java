@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ProfilController {
     private final IProfilService iProfilService;
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Profil> getListProfil() {
         try {
@@ -26,6 +29,7 @@ public class ProfilController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Profil> getProfilById(@PathVariable("id") Long id) {
         try {
@@ -36,6 +40,7 @@ public class ProfilController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Profil addProfil(@RequestBody Profil profil) {
         try {
@@ -45,6 +50,7 @@ public class ProfilController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Profil> updateProfil(@RequestBody Profil profil) {
         try {
@@ -55,6 +61,7 @@ public class ProfilController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteProfil(@PathVariable("id") Long id) {
         try {

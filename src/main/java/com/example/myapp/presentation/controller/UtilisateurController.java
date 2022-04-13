@@ -1,6 +1,7 @@
 package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.IUtilisateurService;
+import com.example.myapp.persistence.model.Employee;
 import com.example.myapp.persistence.model.Utilisateur;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UtilisateurController {
     private final IUtilisateurService iUtilisateurService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> getUtilisateurById (@PathVariable("id") Long id) {
        try{ Utilisateur utilisateur = iUtilisateurService.getUtilisateurById(id);
@@ -29,6 +31,7 @@ public class UtilisateurController {
            throw new IllegalStateException("Error UtilisateurController in method getUtilisateurById:" +e.toString());
        }
     }
+
     @GetMapping(value = "/find/name/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> getUtilisateurByuserName (@PathVariable("userName") String userName) {
         try{ Utilisateur utilisateur = iUtilisateurService.getUtilisateurByuserName(userName);
@@ -38,6 +41,16 @@ public class UtilisateurController {
         }
     }
 
+    @GetMapping(value = "/find/emp/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Employee> getEmpByuserName (@PathVariable("userName") String userName) {
+        try{ Employee emp = iUtilisateurService.getEmpByuserName(userName);
+            return new ResponseEntity<>(emp, HttpStatus.OK);}
+        catch (Exception e){
+            throw new IllegalStateException("Error UtilisateurController in method getEmpByuserName:" +e.toString());
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping
     public List<Utilisateur> getListUtilisateur() {
         try {
@@ -58,6 +71,8 @@ public class UtilisateurController {
        }
 
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value="/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteUtilisateur(@PathVariable("id") Long id) {
         try{
@@ -67,6 +82,8 @@ public class UtilisateurController {
             throw new IllegalStateException("Error UtilisateurController in method deleteUtilisateur:" +e.toString());
         }
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> updateUtilisateur(@RequestBody Utilisateur obj,Long id) {
         try {

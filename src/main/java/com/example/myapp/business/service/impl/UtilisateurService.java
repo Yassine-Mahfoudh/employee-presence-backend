@@ -72,6 +72,20 @@ public class UtilisateurService implements IUtilisateurService {
         }
     }
     @Override
+    public Employee getEmpByuserName(String userName){
+        try {
+            if(userName == null)
+                return new Employee();
+            Utilisateur p = utilisateurRepository.findUtilisateurByuserName(userName);
+            if ( p == null )
+                return new Employee();
+            return p.getEmployee();
+        } catch (Exception e) {
+            throw new IllegalStateException("Error UtilisateurService in method getUtilisateurByuserName :: " + e.toString());
+        }
+    }
+
+    @Override
     public void initRoleAndUser() {
         Profil adminRole = new Profil(
                 "ADMIN"
@@ -208,6 +222,8 @@ public class UtilisateurService implements IUtilisateurService {
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
     }
+
+
 
 }
 

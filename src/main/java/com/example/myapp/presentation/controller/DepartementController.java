@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class DepartementController {
 
     private final IDepartementService iDepartementService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Departement> getListDepartement() {
         try {
@@ -26,6 +28,7 @@ public class DepartementController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departement> getDepartementById(@PathVariable("id") Long id) {
         try {
@@ -36,6 +39,7 @@ public class DepartementController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Departement addDepartement(@RequestBody Departement departement) {
         try {
@@ -45,6 +49,7 @@ public class DepartementController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departement> updateDepartementById(@RequestBody Departement departement, @PathVariable("id") Long id) {
         try {
@@ -55,6 +60,7 @@ public class DepartementController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_RH')")
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDepartementById(@PathVariable("id") Long id) {
         try {
