@@ -14,7 +14,7 @@ public interface IUtilisateurService {
 
     Utilisateur getUtilisateurByuserName(String userName);
 
-    Employee getEmpByuserName(String userName);
+
 
     public  void initRoleAndUser();
 }

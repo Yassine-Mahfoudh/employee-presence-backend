@@ -41,14 +41,7 @@ public class UtilisateurController {
         }
     }
 
-    @GetMapping(value = "/find/emp/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Employee> getEmpByuserName (@PathVariable("userName") String userName) {
-        try{ Employee emp = iUtilisateurService.getEmpByuserName(userName);
-            return new ResponseEntity<>(emp, HttpStatus.OK);}
-        catch (Exception e){
-            throw new IllegalStateException("Error UtilisateurController in method getEmpByuserName:" +e.toString());
-        }
-    }
+
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping
