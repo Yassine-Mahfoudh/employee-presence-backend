@@ -2,13 +2,21 @@ package com.example.myapp.business.service.impl;
 
 import com.example.myapp.business.service.IUtilisateurService;
 import com.example.myapp.persistence.model.Employee;
+//import com.example.myapp.persistence.model.PasswordResetToken;
 import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.model.Utilisateur;
 import com.example.myapp.persistence.repository.EmployeeRepository;
+//import com.example.myapp.persistence.repository.PasswordResetTokenRepository;
 import com.example.myapp.persistence.repository.ProfilRepository;
 import com.example.myapp.persistence.repository.UtilisateurRepository;
+import com.example.myapp.presentation.Utils.EmailUtils;
+import com.google.common.base.Strings;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +24,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -29,10 +34,16 @@ public class UtilisateurService implements IUtilisateurService {
     private UtilisateurRepository utilisateurRepository;
 
     @Autowired
+    private EmailUtils emailUtils;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ProfilRepository profilRepository;
+
+//    @Autowired
+//    private PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -94,24 +105,28 @@ public class UtilisateurService implements IUtilisateurService {
         Utilisateur RhUser = new Utilisateur(
                 "houssem",
                 passwordEncoder.encode("0000"),
+               // "0000",
                 "houssem@gmail.com",
                 new HashSet<Profil>()
         );
         Utilisateur adminUser = new Utilisateur(
                 "yassine",
                 passwordEncoder.encode("1111"),
-                "yassine@gmail.com",
+              //  "1111",
+                "ymahfoudh55@gmail.com",
                 new HashSet<Profil>()
         );
         Utilisateur simpleUser = new Utilisateur(
                 "oussama",
                 passwordEncoder.encode("2222"),
+                //"2222",
                 "oussama@gmail.com",
                 new HashSet<Profil>()
         );
         Utilisateur managerUser = new Utilisateur(
                 "john",
                 passwordEncoder.encode("3333"),
+                //"3333",
                 "john@gmail.com",
                 new HashSet<Profil>()
         );
@@ -122,7 +137,8 @@ public class UtilisateurService implements IUtilisateurService {
                 "admin",
                 Boolean.TRUE,
                 LocalDate.of(2000, 6, 29),
-                "68 dar chaabene"
+                "68 dar chaabene",
+                "902222545"
         );
         Employee Houssem = new Employee(
                 "Houssem",
@@ -130,7 +146,8 @@ public class UtilisateurService implements IUtilisateurService {
                 "RH",
                 Boolean.FALSE,
                 LocalDate.of(2000, 4, 2),
-                "14 sfax"
+                "14 sfax",
+                "99823490"
         );
 
         employeeRepository.saveAll(
@@ -148,7 +165,7 @@ public class UtilisateurService implements IUtilisateurService {
 
         Set<Profil> RhRoles = new HashSet<>();
         RhRoles.add(RhRole);
-        RhRoles.add(simpleUserRole);
+        //RhRoles.add(simpleUserRole);
         RhUser.setProfils(RhRoles);
         RhUser.setEmployee(Houssem);
 
@@ -173,6 +190,7 @@ public class UtilisateurService implements IUtilisateurService {
                 throw new IllegalStateException("Utilisateur login token");
             obj.setCreationdate(new Timestamp(new Date().getTime()));
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
+            //obj.setUserPassword(obj.getUserPassword());
             obj.setProfils(userRoles);
             return utilisateurRepository.save(obj);
         } catch (Exception e) {
@@ -207,11 +225,61 @@ public class UtilisateurService implements IUtilisateurService {
         }
     }
 
-    public String getEncodedPassword(String password) {
+    @Override
+    public Utilisateur findUtilisateurByEmail(final String email){
+        return utilisateurRepository.findUtilisateurByEmail(email);
+    }
+
+    @Override
+    public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
+        try {
+            Utilisateur user = utilisateurRepository.findUtilisateurByEmail(requestMap.get("email"));
+            if(!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail())){
+                emailUtils.forgotMail(user.getEmail(),"Credentials by st2i",user.getUserName(),user.getUserPassword());
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try{
+            Utilisateur user = utilisateurRepository.findUtilisateurByuserName(currentUserName());
+            if(!user.equals(null)){
+               if(passwordEncoder.matches(requestMap.get("oldPassword"), user.getUserPassword())){
+                //if(user.getUserPassword().equals(requestMap.get("oldPassword"))){
+                    user.setUserPassword(getEncodedPassword(requestMap.get("newPassword")));
+                    utilisateurRepository.save(user);
+                    return new ResponseEntity<>("Password Updated Successufuly",HttpStatus.OK);
+                }
+                return new ResponseEntity<>("Incorrect Old Password ",HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>("Something  goes wrong ",HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+      public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
     }
 
+    @Override
+    public String currentUserName() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
+    }
 
 }
 

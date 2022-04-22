@@ -41,12 +41,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers(HttpMethod.POST,"/authenticate").permitAll()
-                .antMatchers(HttpMethod.GET,"/salle").permitAll()
-                .antMatchers(HttpMethod.POST,"/salle/add").permitAll()
-                .antMatchers(HttpMethod.PUT,"/salle/update").permitAll()
-                .antMatchers(HttpMethod.DELETE,"/salle/delete/*").permitAll()
-              //  .antMatchers(HttpMethod.GET,"/utilisateur/username").permitAll()
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.POST,"/authenticate").permitAll()
+                    .antMatchers(HttpMethod.POST,"/utilisateur/forgotPassword").permitAll()
+                    .antMatchers(HttpMethod.GET,"/utilisateur/username").permitAll()
 
 
 

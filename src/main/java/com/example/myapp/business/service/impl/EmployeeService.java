@@ -68,6 +68,7 @@ public class EmployeeService implements IEmployeeService {
             upemp.setStatus(employee.getStatus());
             upemp.setBirthdate(employee.getBirthdate());
             upemp.setAddress(employee.getAddress());
+            upemp.setPhonenumber(employee.getPhonenumber());
 
             upemp.setUpdatedate(new Timestamp(new Date().getTime()));
             upemp.setId(id);

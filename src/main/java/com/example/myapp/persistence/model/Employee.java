@@ -47,6 +47,9 @@ public class Employee implements Serializable {
     private LocalDate birthdate;
     @Column(name = "Employee_address")
     private String address;
+    @Column(name = "Employee_phone")
+    private String phonenumber;
+
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -77,12 +80,15 @@ public class Employee implements Serializable {
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address) {
+    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address,String phonenumber) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.role = role;
         this.status = status;
         this.birthdate = birthdate;
         this.address = address;
+        this.phonenumber=phonenumber;
+
+
     }
 }

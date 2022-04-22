@@ -2,8 +2,10 @@ package com.example.myapp.business.service;
 
 import com.example.myapp.persistence.model.Employee;
 import com.example.myapp.persistence.model.Utilisateur;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUtilisateurService {
     public List<Utilisateur> getListUtilisateur();
@@ -17,4 +19,12 @@ public interface IUtilisateurService {
 
 
     public  void initRoleAndUser();
+
+    Utilisateur findUtilisateurByEmail(String email);
+
+    public ResponseEntity<String> forgotPassword(Map<String,String> requestMap);
+
+    ResponseEntity<String> changePassword(Map<String, String> requestMap);
+
+    String currentUserName();
 }

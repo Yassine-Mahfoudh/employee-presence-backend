@@ -1,26 +1,45 @@
 package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.IUtilisateurService;
-import com.example.myapp.persistence.model.Employee;
-import com.example.myapp.persistence.model.Utilisateur;
+import com.example.myapp.persistence.model.*;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+import org.springframework.core.env.Environment;
+
 
 @RestController
 @RequestMapping(path = "/utilisateur")
 @AllArgsConstructor
 public class UtilisateurController {
+
+
     private final IUtilisateurService iUtilisateurService;
+
+    @Autowired
+    private JavaMailSender mailSender;
+    @Autowired
+    private MessageSource messages;
+    @Autowired
+    private Environment env;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,27 +110,35 @@ public class UtilisateurController {
     @RequestMapping(value = "/username", method = RequestMethod.GET)
     @ResponseBody
     public String currentUserName() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String username = "";
-        if (principal instanceof UserDetails) {
-             username = ((UserDetails)principal).getUsername();
-        } else {
-             username = principal.toString();
+        try {
+            return iUtilisateurService.currentUserName();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return username;
+        return new String(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @PostMapping(path = "/forgotPassword")
+    ResponseEntity<String> forgotPassword(@RequestBody Map<String,String> requestMap){
+        try {
+        return iUtilisateurService.forgotPassword(requestMap);
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+}
+
+    @PostMapping(path = "/changePassword")
+    ResponseEntity<String> changePassword(@RequestBody Map<String,String> requestMap){
+        try {
+
+            return iUtilisateurService.changePassword(requestMap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
-    @GetMapping({"/forUser"})
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public String forUser(){
-        return" this URL is only accessible to the user";
-    }
-    @GetMapping({"/forAdmin"})
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String forAdmin(){
-        return" this URL is only accessible to the admin";
-    }
 
 }
