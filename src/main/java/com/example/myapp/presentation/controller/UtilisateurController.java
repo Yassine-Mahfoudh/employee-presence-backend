@@ -39,6 +39,7 @@ import org.springframework.core.env.Environment;
 public class UtilisateurController {
 
 
+    @Autowired
     private final IUtilisateurService iUtilisateurService;
 
     @Autowired
@@ -136,8 +137,8 @@ public class UtilisateurController {
 }
 */
 @PostMapping("/forgotPassword")
-public  ResponseEntity<String> processForgotPassword(HttpServletRequest request) {
-    String email = request.getParameter("email");
+public  ResponseEntity<String> processForgotPassword(HttpServletRequest request,@RequestBody Map<String,String> requestMap) {
+    String email = requestMap.get("email");
     String token = RandomString.make(30);
 
     try {
@@ -179,7 +180,7 @@ public  ResponseEntity<String> processForgotPassword(HttpServletRequest request)
         mailSender.send(message);
     }
 
-    @GetMapping("/reset_password")
+   /* @GetMapping("/reset_password")
     public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
         Utilisateur utilisateur = iUtilisateurService.getByResetPasswordToken(token);
         model.addAttribute("token", token);
@@ -211,7 +212,7 @@ public  ResponseEntity<String> processForgotPassword(HttpServletRequest request)
 
         return "message";
     }
-
+*/
     @PostMapping(path = "/changePassword")
     ResponseEntity<String> changePassword(@RequestBody Map<String,String> requestMap){
         try {

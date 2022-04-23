@@ -105,7 +105,7 @@ public class UtilisateurService implements IUtilisateurService {
                 "houssem",
                 passwordEncoder.encode("0000"),
                // "0000",
-                "houssem@gmail.com",
+                "houssemhmida1212@gmail.com",
                 new HashSet<Profil>()
         );
         Utilisateur adminUser = new Utilisateur(
