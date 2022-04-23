@@ -10,7 +10,6 @@ import com.example.myapp.persistence.repository.EmployeeRepository;
 import com.example.myapp.persistence.repository.ProfilRepository;
 import com.example.myapp.persistence.repository.UtilisateurRepository;
 import com.example.myapp.presentation.Utils.EmailUtils;
-import com.google.common.base.Strings;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -229,7 +228,7 @@ public class UtilisateurService implements IUtilisateurService {
     public Utilisateur findUtilisateurByEmail(final String email){
         return utilisateurRepository.findUtilisateurByEmail(email);
     }
-
+/*
     @Override
     public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
         try {
@@ -243,6 +242,8 @@ public class UtilisateurService implements IUtilisateurService {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+*/
+
 
     @Override
     public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
@@ -253,11 +254,11 @@ public class UtilisateurService implements IUtilisateurService {
                 //if(user.getUserPassword().equals(requestMap.get("oldPassword"))){
                     user.setUserPassword(getEncodedPassword(requestMap.get("newPassword")));
                     utilisateurRepository.save(user);
-                    return new ResponseEntity<>("Password Updated Successufuly",HttpStatus.OK);
+                    return new ResponseEntity<>(HttpStatus.OK);
                 }
-                return new ResponseEntity<>("Incorrect Old Password ",HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>("Something  goes wrong ",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -279,6 +280,32 @@ public class UtilisateurService implements IUtilisateurService {
             username = principal.toString();
         }
         return username;
+    }
+
+
+    //Reset Password
+
+    @Override
+    public void updateResetPasswordToken(String token, String email) {
+        Utilisateur utilisateur = utilisateurRepository.findUtilisateurByEmail(email);
+        if (utilisateur != null) {
+            utilisateur.setResetPasswordToken(token);
+            utilisateurRepository.save(utilisateur);
+        } else {
+            throw new IllegalStateException("Could not find any user with the email " + email);
+        }
+    }
+    @Override
+    public Utilisateur getByResetPasswordToken(String token) {
+        return utilisateurRepository.findByResetPasswordToken(token);
+    }
+    @Override
+    public void updatePassword(Utilisateur utilisateur, String newPassword) {
+        String encodedPassword=getEncodedPassword(newPassword);
+        utilisateur.setUserPassword(encodedPassword);
+
+        utilisateur.setResetPasswordToken(null);
+        utilisateurRepository.save(utilisateur);
     }
 
 }

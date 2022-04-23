@@ -52,6 +52,9 @@ public class Utilisateur {
     @Column(name = "Update_date")
     private Timestamp updatedate;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     @OneToOne
     @JoinColumn(name = "ID_EMP")
     private Employee employee;

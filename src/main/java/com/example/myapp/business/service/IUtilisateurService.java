@@ -22,9 +22,15 @@ public interface IUtilisateurService {
 
     Utilisateur findUtilisateurByEmail(String email);
 
-    public ResponseEntity<String> forgotPassword(Map<String,String> requestMap);
+  //  public ResponseEntity<String> forgotPassword(Map<String,String> requestMap);
 
     ResponseEntity<String> changePassword(Map<String, String> requestMap);
 
     String currentUserName();
+
+    void updateResetPasswordToken(String token, String email);
+
+    Utilisateur getByResetPasswordToken(String token);
+
+    void updatePassword(Utilisateur utilisateur, String newPassword);
 }

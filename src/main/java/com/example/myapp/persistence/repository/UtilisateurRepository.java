@@ -18,6 +18,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
     @Query("SELECT u FROM Utilisateur u where u.userName =:userName")
     public  Utilisateur findUtilisateurByuserName(@Param("userName") String userName);
 
+    public Utilisateur findByResetPasswordToken(String token);
 
 
 
