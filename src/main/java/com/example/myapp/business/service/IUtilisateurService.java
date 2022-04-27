@@ -17,12 +17,8 @@ public interface IUtilisateurService {
     Utilisateur getUtilisateurByuserName(String userName);
 
 
-
-    public  void initRoleAndUser();
-
     Utilisateur findUtilisateurByEmail(String email);
 
-  //  public ResponseEntity<String> forgotPassword(Map<String,String> requestMap);
 
     ResponseEntity<String> changePassword(Map<String, String> requestMap);
 

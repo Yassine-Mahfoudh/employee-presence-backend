@@ -2,6 +2,7 @@ package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.IUtilisateurService;
 import com.example.myapp.business.service.JWT.JwtService;
+import com.example.myapp.business.service.impl.Initialise;
 import com.example.myapp.persistence.JWT.JwtRequest;
 import com.example.myapp.persistence.JWT.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,11 @@ public class JwtController {
     private JwtService jwtService;
 
     @Autowired
-    private IUtilisateurService iUtilisateurService;
+    private Initialise initialise;
 
     @PostConstruct
     public void initRoleAndUser() {
-        iUtilisateurService.initRoleAndUser();
+        initialise.initRoleAndUser();
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

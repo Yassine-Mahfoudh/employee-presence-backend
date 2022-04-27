@@ -7,19 +7,13 @@ import lombok.AllArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -27,9 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 import org.springframework.core.env.Environment;
 
 
@@ -41,7 +33,6 @@ public class UtilisateurController {
 
     @Autowired
     private final IUtilisateurService iUtilisateurService;
-
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
@@ -105,7 +96,7 @@ public class UtilisateurController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Utilisateur> updateUtilisateur(@RequestBody Utilisateur obj,Long id) {
+    public ResponseEntity<Utilisateur> updateUtilisateur(@RequestBody Utilisateur obj,  @PathVariable("id")  Long id) {
         try {
             Utilisateur updateUtilisateur = iUtilisateurService.updateUtilisateur(obj, id);
         return new ResponseEntity<>(updateUtilisateur, HttpStatus.OK);
@@ -125,17 +116,7 @@ public class UtilisateurController {
         }
         return new String(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR));
     }
-/*
-    @PostMapping(path = "/forgotPassword")
-    ResponseEntity<String> forgotPassword(@RequestBody Map<String,String> requestMap){
-        try {
-        return iUtilisateurService.forgotPassword(requestMap);
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-}
-*/
+
 @PostMapping("/forgotPassword")
 public  ResponseEntity<String> processForgotPassword(HttpServletRequest request,@RequestBody Map<String,String> requestMap) {
     String email = requestMap.get("email");
@@ -180,39 +161,7 @@ public  ResponseEntity<String> processForgotPassword(HttpServletRequest request,
         mailSender.send(message);
     }
 
-   /* @GetMapping("/reset_password")
-    public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
-        Utilisateur utilisateur = iUtilisateurService.getByResetPasswordToken(token);
-        model.addAttribute("token", token);
 
-        if (utilisateur == null) {
-            model.addAttribute("message", "Invalid Token");
-            return "message";
-        }
-
-        return "reset_password_form";
-    }
-
-    @PostMapping("/reset_password")
-    public String processResetPassword(HttpServletRequest request, Model model) {
-        String token = request.getParameter("token");
-        String password = request.getParameter("password");
-
-        Utilisateur utilisateur = iUtilisateurService.getByResetPasswordToken(token);
-        model.addAttribute("title", "Reset your password");
-
-        if (utilisateur == null) {
-            model.addAttribute("message", "Invalid Token");
-            return "message";
-        } else {
-            iUtilisateurService.updatePassword(utilisateur, password);
-
-            model.addAttribute("message", "You have successfully changed your password.");
-        }
-
-        return "message";
-    }
-*/
     @PostMapping(path = "/changePassword")
     ResponseEntity<String> changePassword(@RequestBody Map<String,String> requestMap){
         try {
