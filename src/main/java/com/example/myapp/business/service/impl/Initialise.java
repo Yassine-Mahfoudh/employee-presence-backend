@@ -90,7 +90,8 @@ public class Initialise {
                 Boolean.TRUE,
                 LocalDate.of(2000, 6, 29),
                 "68 dar chaabene",
-                "902222545"
+                "902222545",
+                "#698"
         );
         Employee Houssem = new Employee(
                 "Houssem",
@@ -99,7 +100,8 @@ public class Initialise {
                 Boolean.FALSE,
                 LocalDate.of(2000, 4, 2),
                 "14 sfax",
-                "99823490"
+                "99823490",
+                "#365"
         );
 
         employeeRepository.saveAll(

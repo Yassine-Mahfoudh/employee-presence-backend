@@ -43,6 +43,21 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
+    public Employee getEmployeeByCode(String code){
+        try {
+            if (code == null)
+                return new Employee();
+            Employee e = employeeRepository.findEmployeeByCode(code);
+            if (e == null)
+                return new Employee();
+            return e;
+        } catch (Exception e){
+            throw new IllegalStateException("Error EmployeeService in method getEmployeeByCode :: " + e.toString());
+        }
+
+    }
+
+    @Override
     public Employee addEmployee(Employee emp) {
         try {
             Employee empNomUnique = employeeRepository.findEmployeeByLastname(emp.getLastname());

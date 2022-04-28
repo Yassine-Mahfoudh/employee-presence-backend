@@ -39,6 +39,17 @@ public class EmployeeController {
         }
     }
 
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
+//    @GetMapping(value = "/find/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Employee> getEmployeeByCode(@PathVariable("code") String code) {
+//        try {
+//            Employee employee = iEmployeeService.getEmployeeByCode(code);
+//            return new ResponseEntity<>(employee, HttpStatus.OK);
+//        } catch (Exception e) {
+//            throw new IllegalStateException("Error EmployeeController in method getEmployeeByCode :: " + e.toString());
+//        }
+//    }
+
     @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Employee addEmployee(@RequestBody Employee employee) {
@@ -50,7 +61,7 @@ public class EmployeeController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Employee> updateEmployeeById(@RequestBody Employee employee, @PathVariable("id") Long id) {
         try {
