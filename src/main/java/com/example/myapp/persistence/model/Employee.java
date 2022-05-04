@@ -49,8 +49,7 @@ public class Employee implements Serializable {
     private String address;
     @Column(name = "Employee_phone")
     private String phonenumber;
-    @Column(name = "Employee_code")
-    private String code;
+
 
 
     @CreationTimestamp
@@ -67,29 +66,27 @@ public class Employee implements Serializable {
     //@OneToOne(mappedBy = "employee")
     //private Utilisateur utilisateur;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToOne
-    @JoinColumn(name = "project_id", insertable = false, updatable = false)
-    private Project project;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToOne
+    @JoinColumn(name = "project_id", insertable = false, updatable = false)
+    private String project;
+
     @JoinColumn(name = "salle_id", insertable = false, updatable = false)
-    private Salle salle;
+    private int salle;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address,String phonenumber,String code) {
+    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address, String phonenumber, String project, int salle) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.role = role;
         this.status = status;
         this.birthdate = birthdate;
         this.address = address;
-        this.phonenumber=phonenumber;
-        this.code=code;
+        this.phonenumber = phonenumber;
+        this.project = project;
+        this.salle = salle;
     }
 }

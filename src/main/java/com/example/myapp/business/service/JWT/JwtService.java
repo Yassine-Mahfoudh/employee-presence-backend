@@ -1,6 +1,7 @@
 package com.example.myapp.business.service.JWT;
 
 import com.example.myapp.business.service.ILogAccessService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.JWT.JwtRequest;
 import com.example.myapp.persistence.JWT.JwtResponse;
 import com.example.myapp.persistence.model.LogAccess;
@@ -36,6 +37,9 @@ public class JwtService implements UserDetailsService {
 
     @Autowired
     private ILogAccessService iLogAccessService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
         String userName = jwtRequest.getUserName();
@@ -77,10 +81,7 @@ public class JwtService implements UserDetailsService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, userPassword));
             String code_success="Authentification succeded";
-//            LogAccess logAccess=new LogAccess();
-//            logAccess.setCodeAccess(code_success);
-//            logAccess.setUsername(userName);
-//            logAccess.setDateAuth();
+
             iLogAccessService.saveLogAccess(code_success,userName);
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);

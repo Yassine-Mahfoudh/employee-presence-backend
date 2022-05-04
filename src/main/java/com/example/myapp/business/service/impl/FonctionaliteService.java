@@ -53,8 +53,6 @@ public class FonctionaliteService implements IFonctionaliteService {
             if ( objNomUnique != null)
                 throw new IllegalStateException("Fonctionalite name token");
 
-            fonctionalite.setCreationdate(new Timestamp(new Date().getTime()));
-
             return fonctionaliteRepository.save(fonctionalite);
         } catch (Exception e) {
             throw new IllegalStateException("Error FonctionaliteService in method addFonctionalite :: " + e.toString());

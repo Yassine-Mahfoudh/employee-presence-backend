@@ -1,6 +1,8 @@
 package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.IEmployeeService;
+import com.example.myapp.business.service.ILogDataService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import java.util.List;
 public class EmployeeController {
 
     public final IEmployeeService iEmployeeService;
+    private final ILogDataService iLogDataService;
+    private final UtilisateurService utilisateurService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,16 +43,6 @@ public class EmployeeController {
         }
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
-//    @GetMapping(value = "/find/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Employee> getEmployeeByCode(@PathVariable("code") String code) {
-//        try {
-//            Employee employee = iEmployeeService.getEmployeeByCode(code);
-//            return new ResponseEntity<>(employee, HttpStatus.OK);
-//        } catch (Exception e) {
-//            throw new IllegalStateException("Error EmployeeController in method getEmployeeByCode :: " + e.toString());
-//        }
-//    }
 
     @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

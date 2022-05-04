@@ -1,6 +1,8 @@
 package com.example.myapp.presentation.controller;
 
+import com.example.myapp.business.service.ILogDataService;
 import com.example.myapp.business.service.IProjectService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.Project;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProjetController {
     private final IProjectService iProjetService;
+    private final ILogDataService iLogDataService;
+    private final UtilisateurService utilisateurService;
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")

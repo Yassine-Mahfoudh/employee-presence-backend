@@ -9,5 +9,5 @@ public interface IProfilService {
     public Profil getProfilById(Long id);
     public Profil addProfil(Profil profil);
     public void deleteProfil(Long id);
-    public Profil updateProfil(Profil profil);
+    public Profil updateProfil(Profil profil,Long id);
 }

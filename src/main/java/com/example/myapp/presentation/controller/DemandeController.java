@@ -1,6 +1,8 @@
 package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.IDemandeService;
+import com.example.myapp.business.service.ILogDataService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.Demande;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,14 +20,18 @@ import java.util.List;
 @AllArgsConstructor
 public class DemandeController {
     private final IDemandeService iDemandeService;
+    private final ILogDataService iLogDataService;
+    private final UtilisateurService utilisateurService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Demande> getListDemande() {
         try {
+            iLogDataService.saveLogData(utilisateurService.currentUserName(),"Get List Of Demand");
             return iDemandeService.getListDemande();
+
+
         } catch (Exception e) {
-//            throw new ApiRequestException("Error DemandeController in method getListDemande with custom exception");
             throw new IllegalStateException("Error DemandeController in method getListDemande :: " + e.toString());
         }
     }
@@ -34,6 +40,7 @@ public class DemandeController {
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Demande> getDemandeById(@PathVariable("id") Long id) {
         try {
+            iLogDataService.saveLogData(utilisateurService.currentUserName(),"Get Demand Num : "+id);
             Demande demande = iDemandeService.getDemandeById(id);
             return new ResponseEntity<>(demande, HttpStatus.OK);
         } catch (Exception e) {
@@ -44,6 +51,7 @@ public class DemandeController {
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Demande addDemande(@RequestBody Demande demande) {
         try {
+            iLogDataService.saveLogData(utilisateurService.currentUserName(),"Add new Demand");
             return iDemandeService.addDemande(demande);
         } catch (Exception e) {
             throw new IllegalStateException("Error DemandeController in method addDemande :: " + e.toString());
@@ -51,10 +59,11 @@ public class DemandeController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
-    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Demande> updateDemandeById(@RequestBody Demande demande) {
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Demande> updateDemandeById(@RequestBody Demande demande, @PathVariable("id") Long id) {
         try {
-            Demande updateDemande = iDemandeService.updateDemandeById(demande);
+            iLogDataService.saveLogData(utilisateurService.currentUserName(),"Update Demande Num : " +demande.getId());
+            Demande updateDemande = iDemandeService.updateDemandeById(demande,id);
             return new ResponseEntity<>(updateDemande, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error DemandeController in method updateDemandeById :: " + e.toString());
@@ -64,6 +73,7 @@ public class DemandeController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDemandeById(@PathVariable("id") Long id) {
         try {
+            iLogDataService.saveLogData(utilisateurService.currentUserName(),"Delete Demande Num : "+id);
             iDemandeService.deleteDemandeById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

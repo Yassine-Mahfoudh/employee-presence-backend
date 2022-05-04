@@ -1,6 +1,8 @@
 package com.example.myapp.presentation.controller;
 
+import com.example.myapp.business.service.ILogDataService;
 import com.example.myapp.business.service.IUtilisateurService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.*;
 import com.example.myapp.presentation.Utils.Utility;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,8 @@ public class UtilisateurController {
 
     @Autowired
     private final IUtilisateurService iUtilisateurService;
+    @Autowired
+    private final ILogDataService iLogDataService;
     @Autowired
     private JavaMailSender mailSender;
     @Autowired

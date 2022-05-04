@@ -1,7 +1,9 @@
 package com.example.myapp.presentation.controller;
 
 
+import com.example.myapp.business.service.ILogDataService;
 import com.example.myapp.business.service.IProfilService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.Profil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProfilController {
     private final IProfilService iProfilService;
+    private final ILogDataService iLogDataService;
+    private final UtilisateurService utilisateurService;
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
@@ -51,10 +55,10 @@ public class ProfilController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Profil> updateProfil(@RequestBody Profil profil) {
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Profil> updateProfil(@RequestBody Profil profil, @PathVariable("id") Long id) {
         try {
-            Profil updateProfil = iProfilService.updateProfil(profil);
+            Profil updateProfil = iProfilService.updateProfil(profil,id);
             return new ResponseEntity<>(updateProfil, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProfilController in method updateProfil :: " + e.toString());

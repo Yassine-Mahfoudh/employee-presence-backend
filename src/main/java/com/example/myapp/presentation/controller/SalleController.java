@@ -1,7 +1,9 @@
 package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.IDemandeService;
+import com.example.myapp.business.service.ILogDataService;
 import com.example.myapp.business.service.ISalleService;
+import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.Demande;
 import com.example.myapp.persistence.model.Salle;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SalleController {
     private final ISalleService iSalleService;
+    private final ILogDataService iLogDataService;
+    private final UtilisateurService utilisateurService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,10 +55,10 @@ public class SalleController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_RH')")
-    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle) {
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle, @PathVariable("id") Long id) {
         try {
-            Salle updateS = iSalleService.updateSalle(salle);
+            Salle updateS = iSalleService.updateSalle(salle,id);
             return new ResponseEntity<>(updateS, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error SalleController in method updateSalle :: " + e.toString());

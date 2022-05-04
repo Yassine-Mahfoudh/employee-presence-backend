@@ -18,7 +18,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Service
-public class Initialise {
+public class Initialize {
 
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -91,7 +91,8 @@ public class Initialise {
                 LocalDate.of(2000, 6, 29),
                 "68 dar chaabene",
                 "902222545",
-                "#698"
+                "webservice",
+                5
         );
         Employee Houssem = new Employee(
                 "Houssem",
@@ -101,7 +102,8 @@ public class Initialise {
                 LocalDate.of(2000, 4, 2),
                 "14 sfax",
                 "99823490",
-                "#365"
+                "websocket",
+                7
         );
 
         employeeRepository.saveAll(

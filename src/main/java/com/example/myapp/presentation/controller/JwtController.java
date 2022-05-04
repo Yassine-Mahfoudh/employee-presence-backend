@@ -1,8 +1,7 @@
 package com.example.myapp.presentation.controller;
 
-import com.example.myapp.business.service.IUtilisateurService;
 import com.example.myapp.business.service.JWT.JwtService;
-import com.example.myapp.business.service.impl.Initialise;
+import com.example.myapp.business.service.impl.Initialize;
 import com.example.myapp.persistence.JWT.JwtRequest;
 import com.example.myapp.persistence.JWT.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class JwtController {
     private JwtService jwtService;
 
     @Autowired
-    private Initialise initialise;
+    private Initialize initialise;
 
     @PostConstruct
     public void initRoleAndUser() {

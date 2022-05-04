@@ -9,7 +9,7 @@ public interface ISalleService{
         public List<Salle> getListSalle();
         public Salle addSalle(Salle Salle);
         public void deleteSalle(Long id);
-    public Salle updateSalle(Salle Salle);
+    public Salle updateSalle(Salle Salle,Long id);
     public Salle getSalleById(Long id);
 
 }

@@ -8,9 +8,6 @@ public interface IEmployeeService {
 
     public List<Employee> getListEmployee();
     public Employee getEmployeeById(Long id);
-
-    Employee getEmployeeByCode(String code);
-
     public Employee addEmployee(Employee emp);
     public void deleteEmployeeById(Long id);
     public Employee updateEmployeeById(Employee employee,Long id);

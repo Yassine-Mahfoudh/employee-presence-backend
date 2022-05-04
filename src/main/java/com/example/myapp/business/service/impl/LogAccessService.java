@@ -3,8 +3,6 @@ package com.example.myapp.business.service.impl;
 import com.example.myapp.business.service.ILogAccessService;
 import com.example.myapp.persistence.model.LogAccess;
 import com.example.myapp.persistence.repository.LogAccessRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,6 @@ import java.util.List;
 @Service
 public class LogAccessService implements ILogAccessService {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogAccessService.class);
 
     @Autowired
     private LogAccessRepository logAccessRepository;
@@ -30,7 +27,7 @@ public class LogAccessService implements ILogAccessService {
             logAccess.setUsername(username);
             logAccessRepository.save(logAccess);
         } catch (Exception e) {
-            logger.error("Error LogAccessService in method saveLogAccess :: "+e.toString());
+            throw new IllegalStateException("Error LogAccessService in method saveLogAccess :: "+e.toString());
         }
     }
 
