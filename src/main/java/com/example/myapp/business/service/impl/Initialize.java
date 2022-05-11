@@ -110,8 +110,10 @@ public class Initialize {
                 List.of(Yassine, Houssem)
         );
 
+
         Set<Profil> simpleUserRoles = new HashSet<>();
         simpleUserRoles.add(simpleUserRole);
+        //simpleUserRoles.add(managerRole);
         simpleUser.setProfils(simpleUserRoles);
 
         Set<Profil> adminRoles = new HashSet<>();
