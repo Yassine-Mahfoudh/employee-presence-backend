@@ -14,10 +14,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-
+@Transactional
 @AllArgsConstructor
 @Service
-@Transactional
 @Slf4j
 public class DemandeService implements IDemandeService {
     public final DemandeRepository demandeRepository;
@@ -74,7 +73,7 @@ public class DemandeService implements IDemandeService {
             updem.setMotive(demande.getMotive());
             updem.setUpdatedate(new Timestamp(new Date().getTime()));
             updem.setId(id);
-            log.info("updating  demade {} to the databse ",demande.getName());
+            log.info("updating demande {} to the database ",demande.getName());
 
             return demandeRepository.save(updem);
         }

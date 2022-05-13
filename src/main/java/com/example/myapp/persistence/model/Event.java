@@ -1,5 +1,6 @@
 package com.example.myapp.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,13 +29,19 @@ public class Event {
     @Column(name = "event_title")
     private String title;
     @Column(name = "event_start")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String start;
     @Column(name = "event_end")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String end;
+    /*@Column(name = "rrule")
+    private RRule rrule;
+*/
 
     public Event(String title, String start, String end) {
         this.title = title;
         this.start = start;
         this.end = end;
     }
+
 }
