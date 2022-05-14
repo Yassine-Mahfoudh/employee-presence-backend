@@ -68,7 +68,7 @@ public class DemandeService implements IDemandeService {
     @Override
     public Demande updateDemandeById(Demande demande,Long id) {
         try {
-            Demande updem = demandeRepository.findDemandeById(demande.getId());
+            Demande updem = demandeRepository.findDemandeById(id);
             updem.setName(demande.getName());
             updem.setMotive(demande.getMotive());
             updem.setUpdatedate(new Timestamp(new Date().getTime()));

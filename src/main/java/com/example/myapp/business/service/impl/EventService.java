@@ -48,6 +48,22 @@ public class EventService implements IEventService {
     }
 
     @Override
+    public Event getEventByTitle(String title){
+        try {
+            if (title == null)
+                return new Event();
+            Event e = eventRepository.findEventByTitle(title);
+            if (e == null)
+                return new Event();
+            log.info("Fetching event with title :{} ",title);
+            return e;
+        } catch (Exception e){
+            throw new IllegalStateException("Error EventService in method getEventByTitle :: " + e.toString());
+        }
+
+    }
+
+    @Override
     public Event addEvent(Event event) {
         try {
             Event objNomUnique = eventRepository.findEventByTitle(event.getTitle());
@@ -66,7 +82,7 @@ public class EventService implements IEventService {
     @Override
     public Event updateEventById(Event event,Long id) {
         try {
-            Event upevent = eventRepository.findEventById(event.getId());
+            Event upevent = eventRepository.findEventById(id);
             upevent.setTitle(event.getTitle());
             upevent.setStart(event.getStart());
             upevent.setEnd(event.getEnd());
@@ -80,6 +96,8 @@ public class EventService implements IEventService {
             throw new IllegalStateException("Error EventService in method updateEventById :: " + e.toString());
         }
     }
+
+
 
     @Override
     public void deleteEventById(Long id) {

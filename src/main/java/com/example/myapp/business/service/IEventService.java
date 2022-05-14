@@ -10,7 +10,9 @@ public interface IEventService {
 
    Event getEventById(Long id);
 
-   public Event addEvent(Event event);
+    Event getEventByTitle(String title);
+
+    public Event addEvent(Event event);
 
    Event updateEventById(Event event, Long id);
 

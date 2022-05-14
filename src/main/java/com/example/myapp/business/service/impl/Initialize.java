@@ -113,7 +113,7 @@ public class Initialize {
 
         Set<Profil> simpleUserRoles = new HashSet<>();
         simpleUserRoles.add(simpleUserRole);
-        //simpleUserRoles.add(managerRole);
+        simpleUserRoles.add(managerRole);
         simpleUser.setProfils(simpleUserRoles);
 
         Set<Profil> adminRoles = new HashSet<>();
@@ -130,6 +130,8 @@ public class Initialize {
 
         Set<Profil> managerRoles = new HashSet<>();
         managerRoles.add(managerRole);
+        managerRoles.add(simpleUserRole);
+
         managerUser.setProfils(managerRoles);
 
         utilisateurRepository.saveAll(

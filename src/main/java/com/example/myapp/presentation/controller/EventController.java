@@ -48,6 +48,18 @@ public class EventController {
         }
     }
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
+    @GetMapping(value = "/find/title/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Event> getEventByTitle(@PathVariable("title") String title) {
+        try {
+            // iLogDataService.saveLogData(utilisateurService.currentUserName(),"Get Demand Num : "+id);
+            Event event = iEventService.getEventByTitle(title);
+            return new ResponseEntity<>(event, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new IllegalStateException("Error EventController in method getEventByTitle :: " + e.toString());
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Event addEvent(@RequestBody Event event) {
         try {
