@@ -42,25 +42,14 @@ public class Event {
     @Column(name = "employee")
     private String employee;
 
-    @Column(name = "startRecur")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private String startRecur;
+    @Column(name="rrule")
+    private String rrule;
 
-    @Column(name = "endRecur")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private String endRecur;
-
-    @Transient
-    private int[] daysOfWeek;
-
-
-    public Event(String title, String start, String end, String employee, String startRecur, String endRecur, int[] daysOfWeek) {
+    public Event(String title, String start, String end, String employee,String rrule) {
         this.title = title;
         this.start = start;
         this.end = end;
         this.employee = employee;
-        this.startRecur = startRecur;
-        this.endRecur = endRecur;
-        this.daysOfWeek = daysOfWeek;
+        this.rrule=rrule;
     }
 }

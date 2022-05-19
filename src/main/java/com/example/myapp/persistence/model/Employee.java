@@ -49,7 +49,8 @@ public class Employee implements Serializable {
     private String address;
     @Column(name = "Employee_phone")
     private String phonenumber;
-
+    @Column(name = "Employee_manager")
+    private String manager;
 
 
     @CreationTimestamp
@@ -66,6 +67,9 @@ public class Employee implements Serializable {
     //@OneToOne(mappedBy = "employee")
     //private Utilisateur utilisateur;
 
+    //@OneToOne(mappedBy = "manager")
+    //private Employee manager;
+
 
     @JoinColumn(name = "project_id", insertable = false, updatable = false)
     private String project;
@@ -78,7 +82,7 @@ public class Employee implements Serializable {
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address, String phonenumber, String project, int salle) {
+    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address, String phonenumber, String project, int salle,String manager) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.role = role;
@@ -88,5 +92,6 @@ public class Employee implements Serializable {
         this.phonenumber = phonenumber;
         this.project = project;
         this.salle = salle;
+        this.manager=manager;
     }
 }

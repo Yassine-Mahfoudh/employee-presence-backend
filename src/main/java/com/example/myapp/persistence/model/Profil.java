@@ -39,6 +39,8 @@ public class Profil {
     private Long id;
     @Column(name = "Name")
     private String name;
+    @Column(name = "Description")
+    private String description;
 
 
     @CreationTimestamp
@@ -54,7 +56,8 @@ public class Profil {
     @ManyToMany(fetch = EAGER)
     private Collection<Fonctionalite> fonctionalites = new ArrayList<>();
 
-    public Profil(String name) {
+    public Profil(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 }

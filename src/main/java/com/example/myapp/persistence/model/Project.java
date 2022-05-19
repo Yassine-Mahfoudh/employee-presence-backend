@@ -21,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 public class Project {
+
     @SequenceGenerator(
             name = "projet_sequence",
             sequenceName ="projet_sequence",

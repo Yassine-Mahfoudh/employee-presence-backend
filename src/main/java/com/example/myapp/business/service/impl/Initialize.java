@@ -39,16 +39,20 @@ public class Initialize {
 
     public void initRoleAndUser() {
         Profil adminRole = new Profil(
-                "ADMIN"
+                "ADMIN",
+                "Gérer les utilisateurs, gérer les profils, gérer les salles, gérer les departements "
         );
         Profil RhRole = new Profil(
-                "RH"
+                "RH",
+                "bbbb"
         );
         Profil simpleUserRole = new Profil(
-                "USER"
+                "USER",
+                "cccc"
         );
         Profil managerRole = new Profil(
-                "MANAGER"
+                "MANAGER",
+                "dddd"
         );
         profilRepository.saveAll(
                 List.of(adminRole, RhRole,simpleUserRole,managerRole)
@@ -84,26 +88,28 @@ public class Initialize {
         );
 
         Employee Yassine = new Employee(
-                "Yassine",
                 "Mahfoudh",
+                "Yassine",
                 "admin",
                 Boolean.TRUE,
                 LocalDate.of(2000, 6, 29),
                 "68 dar chaabene",
                 "902222545",
                 "webservice",
-                5
+                5,
+                "Yassine"
         );
         Employee Houssem = new Employee(
-                "Houssem",
                 "Hmida",
+                "Houssem",
                 "RH",
                 Boolean.FALSE,
                 LocalDate.of(2000, 4, 2),
                 "14 sfax",
                 "99823490",
                 "websocket",
-                7
+                7,
+                "Yassine"
         );
 
         employeeRepository.saveAll(
