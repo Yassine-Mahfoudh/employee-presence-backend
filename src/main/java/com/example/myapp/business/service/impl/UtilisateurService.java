@@ -1,16 +1,14 @@
 package com.example.myapp.business.service.impl;
 
 import com.example.myapp.business.service.IUtilisateurService;
-import com.example.myapp.persistence.model.Employee;
-//import com.example.myapp.persistence.model.PasswordResetToken;
 import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.model.Utilisateur;
 import com.example.myapp.persistence.repository.EmployeeRepository;
-//import com.example.myapp.persistence.repository.PasswordResetTokenRepository;
 import com.example.myapp.persistence.repository.ProfilRepository;
 import com.example.myapp.persistence.repository.UtilisateurRepository;
 import com.example.myapp.presentation.Utils.EmailUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +20,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @AllArgsConstructor
 @Service
+@Slf4j
+@Transactional
 public class UtilisateurService implements IUtilisateurService {
 
     @Autowired
@@ -49,6 +48,7 @@ public class UtilisateurService implements IUtilisateurService {
 
     public List<Utilisateur> getListUtilisateur(){
         try {
+            log.info("Fetching all users ");
             return utilisateurRepository.findAll();
         } catch (Exception e) {
             throw  new IllegalStateException("Error UtilisateurService in method getListUtilisateur " + e.toString());
@@ -62,6 +62,7 @@ public class UtilisateurService implements IUtilisateurService {
             Utilisateur p = utilisateurRepository.findUtilisateurById(id);
             if ( p == null )
                 return new Utilisateur();
+            log.info("Fetching user with id :{} ",id);
             return p;
         } catch (Exception e) {
             throw new IllegalStateException("Error UtilisateurService in method getUtilisateurById :: " + e.toString());
@@ -75,6 +76,7 @@ public class UtilisateurService implements IUtilisateurService {
             Utilisateur p = utilisateurRepository.findUtilisateurByuserName(userName);
             if ( p == null )
                 return new Utilisateur();
+            log.info("Fetching user with username :{} ",userName);
             return p;
         } catch (Exception e) {
             throw new IllegalStateException("Error UtilisateurService in method getUtilisateurByuserName :: " + e.toString());
@@ -98,13 +100,14 @@ public class UtilisateurService implements IUtilisateurService {
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
             //obj.setUserPassword(obj.getUserPassword());
             obj.setProfils(userRoles);
+            log.info("Saving new user {} to the databse ",obj.getUserName());
+
             return utilisateurRepository.save(obj);
         } catch (Exception e) {
             throw  new IllegalStateException("Error UtilisateurService in method addUtilisateur " + e.toString());
         }
     }
 
-    @Transactional
     @Override
     public Utilisateur updateUtilisateur(Utilisateur utilisateur,Long id) {
         try {
@@ -114,16 +117,17 @@ public class UtilisateurService implements IUtilisateurService {
            obj.setEmail(utilisateur.getEmail());
            obj.setUpdatedate(new Timestamp(new Date().getTime()));
            obj.setId(id);
+            log.info("updating user {} to the database ",utilisateur.getUserName());
             return utilisateurRepository.save(obj);
         } catch (Exception e) {
             throw new IllegalStateException("Error UtilisateurService in method updateUtilisateur : " + e.toString());
         }
 
     }
-    @Transactional
     @Override
     public void deleteUtilisateur(Long id) {
         try {
+            log.info("Deleting user with id {}  ",id);
             utilisateurRepository.deleteById(id);
         }
         catch (Exception e) {
@@ -133,6 +137,7 @@ public class UtilisateurService implements IUtilisateurService {
 
     @Override
     public Utilisateur findUtilisateurByEmail(final String email){
+        log.info("Fetching user with email :{} ",email);
         return utilisateurRepository.findUtilisateurByEmail(email);
     }
 
@@ -148,6 +153,7 @@ public class UtilisateurService implements IUtilisateurService {
                    if (!Objects.equals(requestMap.get("oldPassword"), requestMap.get("newPassword"))) {
                        user.setUserPassword(getEncodedPassword(requestMap.get("newPassword")));
                        utilisateurRepository.save(user);
+                       log.info("User with username :{} change his password",user.getUserName());
                        return new ResponseEntity<>(HttpStatus.OK);
                    }
                }
@@ -174,6 +180,7 @@ public class UtilisateurService implements IUtilisateurService {
         } else {
             username = principal.toString();
         }
+        log.info("Get the current user username");
         return username;
     }
 
@@ -200,10 +207,10 @@ public class UtilisateurService implements IUtilisateurService {
         utilisateur.setUserPassword(encodedPassword);
 
         utilisateur.setResetPasswordToken(null);
+        log.info("User with username :{} update his password",utilisateur.getUserName());
         utilisateurRepository.save(utilisateur);
     }
 
 }
-
 
 

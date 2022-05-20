@@ -4,6 +4,7 @@ import com.example.myapp.business.service.IProjectService;
 import com.example.myapp.persistence.model.Project;
 import com.example.myapp.persistence.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,12 +13,15 @@ import java.util.Date;
 import java.util.List;
 @AllArgsConstructor
 @Service
+@Slf4j
+@Transactional
 public class ProjectService implements IProjectService {
     public final ProjectRepository projectRepository;
 
     @Override
     public List<Project> getListProjet() {
         try {
+            log.info("Fetching all projects ");
             return projectRepository.findAll();
         } catch (Exception e){
             throw new IllegalStateException("Error ProjetService in method getListProjet :: " + e.toString());
@@ -33,6 +37,8 @@ public class ProjectService implements IProjectService {
             Project d = projectRepository.findProjectById(id);
             if (d == null)
                 return new Project();
+            log.info("Fetching project with id :{} ",id);
+
             return d;
         } catch (Exception e){
             throw new IllegalStateException("Error ProjetService in method getProjetById :: " + e.toString());
@@ -50,15 +56,13 @@ public class ProjectService implements IProjectService {
                 throw new IllegalStateException("Projet name token");
 
             projet.setCreationdate(new Timestamp(new Date().getTime()));
-
+            log.info("Saving new project {} to the databse ",projet.getName());
             return projectRepository.save(projet);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProjetService in method addProjet :: " + e.toString());
         }
     }
 
-
-    @Transactional
     @Override
     public Project updateProjet(Project project, Long id) {
         try {
@@ -70,25 +74,23 @@ public class ProjectService implements IProjectService {
             upproj.setPriority(project.getPriority());
             upproj.setUpdatedate(new Timestamp(new Date().getTime()));
             upproj.setId(id);
-
+            log.info("updating project {} to the database ",project.getName());
             return projectRepository.save(upproj);
         }
         catch (Exception e) {
             throw new IllegalStateException("Error ProjetService in method updateProjet :: " + e.toString());
         }
     }
-
-    @Transactional
     @Override
     public void deleteProjet(Long id) {
         try {
+            log.info("Deleting project with id {}  ",id);
             projectRepository.deleteById(id);
         }
         catch (Exception e) {
             throw new IllegalStateException("Error ProjetService in method deleteProjet :: " + e.toString());
         }
     }
-
-
-
 }
+
+

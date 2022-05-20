@@ -2,13 +2,11 @@ package com.example.myapp.presentation.controller;
 
 import com.example.myapp.business.service.ILogDataService;
 import com.example.myapp.business.service.IUtilisateurService;
-import com.example.myapp.business.service.impl.UtilisateurService;
 import com.example.myapp.persistence.model.*;
 import com.example.myapp.presentation.Utils.Utility;
 import lombok.AllArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
-import org.springframework.core.env.Environment;
 
 
 @RestController
@@ -39,16 +36,26 @@ public class UtilisateurController {
     private final ILogDataService iLogDataService;
     @Autowired
     private JavaMailSender mailSender;
-    @Autowired
-    private MessageSource messages;
-    @Autowired
-    private Environment env;
+
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
+    @GetMapping
+    public List<Utilisateur> getListUtilisateur() {
+        try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la liste des utilisateurs");
+            return iUtilisateurService.getListUtilisateur();
+        }catch(Exception e){
+            throw new IllegalStateException("Error UtilisateurController in method getListUtilisateur:" +e.toString());
+        }
+
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> getUtilisateurById (@PathVariable("id") Long id) {
        try{ Utilisateur utilisateur = iUtilisateurService.getUtilisateurById(id);
-        return new ResponseEntity<>(utilisateur, HttpStatus.OK);}
+           iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'utilisateur numéro : "+id);
+           return new ResponseEntity<>(utilisateur, HttpStatus.OK);}
        catch (Exception e){
            throw new IllegalStateException("Error UtilisateurController in method getUtilisateurById:" +e.toString());
        }
@@ -57,30 +64,19 @@ public class UtilisateurController {
     @GetMapping(value = "/find/name/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> getUtilisateurByuserName (@PathVariable("userName") String userName) {
         try{ Utilisateur utilisateur = iUtilisateurService.getUtilisateurByuserName(userName);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'utilisateur  : "+userName);
             return new ResponseEntity<>(utilisateur, HttpStatus.OK);}
         catch (Exception e){
             throw new IllegalStateException("Error UtilisateurController in method getUtilisateurByuserName:" +e.toString());
         }
     }
 
-
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
-    @GetMapping
-    public List<Utilisateur> getListUtilisateur() {
-        try {
-            return iUtilisateurService.getListUtilisateur();
-        }catch(Exception e){
-            throw new IllegalStateException("Error UtilisateurController in method getListUtilisateur:" +e.toString());
-        }
-
-    }
-
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Utilisateur addUtilisateur(@RequestBody Utilisateur obj){
        try{
-          return iUtilisateurService.addUtilisateur(obj);
+           iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Ajouter un nouveau utilisateur");
+           return iUtilisateurService.addUtilisateur(obj);
        }catch(Exception e){
            throw new IllegalStateException("Error UtilisateurController in method addUtilisateur:" +e.toString());
        }
@@ -91,6 +87,7 @@ public class UtilisateurController {
     @DeleteMapping(value="/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteUtilisateur(@PathVariable("id") Long id) {
         try{
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer l'utilisateur numéro : "+id);
             iUtilisateurService.deleteUtilisateur(id);
         return new ResponseEntity<>(HttpStatus.OK);
         }catch(Exception e){
@@ -102,6 +99,7 @@ public class UtilisateurController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> updateUtilisateur(@RequestBody Utilisateur obj,  @PathVariable("id")  Long id) {
         try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'utilisateur numéro : "+id);
             Utilisateur updateUtilisateur = iUtilisateurService.updateUtilisateur(obj, id);
         return new ResponseEntity<>(updateUtilisateur, HttpStatus.OK);
     }
@@ -114,6 +112,8 @@ public class UtilisateurController {
     @ResponseBody
     public String currentUserName() {
         try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Obtenir le nom de l'utilisateur actuel");
+
             return iUtilisateurService.currentUserName();
         }catch (Exception e){
             e.printStackTrace();
@@ -169,7 +169,7 @@ public  ResponseEntity<String> processForgotPassword(HttpServletRequest request,
     @PostMapping(path = "/changePassword")
     ResponseEntity<String> changePassword(@RequestBody Map<String,String> requestMap){
         try {
-
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Changer son mot de passe ");
             return iUtilisateurService.changePassword(requestMap);
         }catch (Exception e){
             e.printStackTrace();

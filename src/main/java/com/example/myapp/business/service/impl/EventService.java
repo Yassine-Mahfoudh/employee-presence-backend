@@ -66,10 +66,10 @@ public class EventService implements IEventService {
     @Override
     public Event addEvent(Event event) {
         try {
-            Event objNomUnique = eventRepository.findEventByTitle(event.getTitle());
+            /*Event objNomUnique = eventRepository.findEventByTitle(event.getTitle());
 
             if ( objNomUnique != null)
-                throw new IllegalStateException("Event title token");
+                throw new IllegalStateException("Event title token");*/
 
             log.info("Saving new event {} to the databse ",event.getTitle());
 
@@ -111,3 +111,4 @@ public class EventService implements IEventService {
     }
 
 }
+

@@ -4,6 +4,7 @@ import com.example.myapp.business.service.IEmployeeService;
 import com.example.myapp.persistence.model.Employee;
 import com.example.myapp.persistence.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
+@Transactional
 public class EmployeeService implements IEmployeeService {
 
     public final EmployeeRepository employeeRepository;
@@ -20,6 +23,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public List<Employee> getListEmployee() {
         try {
+            log.info("Fetching all employees ");
             return employeeRepository.findAll();
         } catch (Exception e){
             throw new IllegalStateException("Error EmployeeService in method getListEmployee :: " + e.toString());
@@ -35,6 +39,8 @@ public class EmployeeService implements IEmployeeService {
             Employee e = employeeRepository.findEmployeeById(id);
             if (e == null)
                 return new Employee();
+            log.info("Fetching employee with id :{} ",id);
+
             return e;
         } catch (Exception e){
             throw new IllegalStateException("Error EmployeeService in method getEmployeeById :: " + e.toString());
@@ -53,13 +59,13 @@ public class EmployeeService implements IEmployeeService {
                 throw new IllegalStateException("Employee name token");
 
             emp.setCreationdate(new Timestamp(new Date().getTime()));
+            log.info("Saving new employee {} to the databse ",emp.getFirstname());
 
             return employeeRepository.save(emp);
         } catch (Exception e) {
             throw new IllegalStateException("Error EmployeeService in method addEmployee :: " + e.toString());
         }
     }
-    @Transactional
     @Override
     public Employee updateEmployeeById(Employee employee,Long id) {
         try {
@@ -78,6 +84,7 @@ public class EmployeeService implements IEmployeeService {
             upemp.setUpdatedate(new Timestamp(new Date().getTime()));
             upemp.setId(id);
 
+            log.info("updating employee {} to the database ",employee.getFirstname());
             return employeeRepository.save(upemp);
         }
         catch (Exception e) {
@@ -85,10 +92,10 @@ public class EmployeeService implements IEmployeeService {
         }
     }
 
-    @Transactional
     @Override
     public void deleteEmployeeById(Long id) {
         try {
+            log.info("Deleting employee with id {}  ",id);
             employeeRepository.deleteById(id);
         }
         catch (Exception e) {

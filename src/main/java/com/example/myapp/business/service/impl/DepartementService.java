@@ -4,6 +4,7 @@ import com.example.myapp.business.service.IDepartementService;
 import com.example.myapp.persistence.model.Departement;
 import com.example.myapp.persistence.repository.DepartementRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
+@Transactional
 public class DepartementService implements IDepartementService {
 
     public final DepartementRepository departementRepository;
@@ -20,6 +23,7 @@ public class DepartementService implements IDepartementService {
     @Override
     public List<Departement> getListDepartement() {
         try {
+            log.info("Fetching all departments ");
             return departementRepository.findAll();
         } catch (Exception e){
             throw new IllegalStateException("Error DepartementService in method getListDepartement :: " + e.toString());
@@ -34,6 +38,8 @@ public class DepartementService implements IDepartementService {
             Departement d = departementRepository.findDepartementById(id);
             if (d == null)
                 return new Departement();
+            log.info("Fetching department with id :{} ",id);
+
             return d;
         } catch (Exception e){
             throw new IllegalStateException("Error DepartementService in method getDepartementById :: " + e.toString());
@@ -49,13 +55,12 @@ public class DepartementService implements IDepartementService {
                 throw new IllegalStateException("Departement name token");
 
             dep.setCreationdate(new Timestamp(new Date().getTime()));
-
+            log.info("Saving new departement {} to the databse ",dep.getName());
             return departementRepository.save(dep);
         } catch (Exception e) {
             throw new IllegalStateException("Error DepartementService in method addDepartement :: " + e.toString());
         }
     }
-    @Transactional
     @Override
     public Departement updateDepartementById(Departement departement,Long id) {
         try {
@@ -64,6 +69,7 @@ public class DepartementService implements IDepartementService {
             updep.setNbsalles(departement.getNbsalles());
             updep.setUpdatedate(new Timestamp(new Date().getTime()));
             updep.setId(id);
+            log.info("updating departement {} to the database ",departement.getName());
 
             return departementRepository.save(updep);
         }
@@ -72,10 +78,10 @@ public class DepartementService implements IDepartementService {
         }
     }
 
-    @Transactional
     @Override
     public void deleteDepartementById(Long id) {
         try {
+            log.info("Deleting department with id {}  ",id);
             departementRepository.deleteById(id);
         }
         catch (Exception e) {
@@ -83,3 +89,4 @@ public class DepartementService implements IDepartementService {
         }
     }
 }
+

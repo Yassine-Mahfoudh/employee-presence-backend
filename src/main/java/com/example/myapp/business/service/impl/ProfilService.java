@@ -4,6 +4,7 @@ import com.example.myapp.business.service.IProfilService;
 import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.repository.ProfilRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,12 +13,15 @@ import java.util.Date;
 import java.util.List;
 @AllArgsConstructor
 @Service
+@Slf4j
+@Transactional
 public class ProfilService implements IProfilService {
     public final ProfilRepository profilRepository;
     @Override
 
     public List<Profil> getListProfil() {
         try {
+            log.info("Fetching all profils ");
             return profilRepository.findAll();
         } catch (Exception e){
             throw new IllegalStateException("Error ProfilService in method getListProfil :: " + e.toString());
@@ -33,6 +37,8 @@ public class ProfilService implements IProfilService {
             Profil d = profilRepository.findProfilById(id);
             if (d == null)
                 return new Profil();
+            log.info("Fetching profil with id :{} ",id);
+
             return d;
         } catch (Exception e){
             throw new IllegalStateException("Error ProfilService in method getDemandeById :: " + e.toString());
@@ -51,13 +57,13 @@ public class ProfilService implements IProfilService {
 
             profil.setCreationdate(new Timestamp(new Date().getTime()));
 
+            log.info("Saving new profil {} to the databse ",profil.getName());
             return profilRepository.save(profil);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProfilService in method addProfil :: " + e.toString());
         }
     }
 
-    @Transactional
     @Override
     public Profil updateProfil(Profil profil,Long id) {
         try {
@@ -65,6 +71,7 @@ public class ProfilService implements IProfilService {
             upprof.setName(profil.getName());
             upprof.setUpdatedate(new Timestamp(new Date().getTime()));
             upprof.setId(id);
+            log.info("updating profil {} to the database ",profil.getName());
             return profilRepository.save(upprof);
         }
         catch (Exception e) {
@@ -72,10 +79,10 @@ public class ProfilService implements IProfilService {
         }
     }
 
-    @Transactional
     @Override
     public void deleteProfil(Long id) {
         try {
+            log.info("Deleting profil with id {}  ",id);
             profilRepository.deleteById(id);
         }
         catch (Exception e) {
