@@ -41,6 +41,8 @@ public class Salle {
     private int nbposte;
     @Column(name="Attendance_percentage")
     private int pourcentagePres;
+    @Column(name="Departement")
+    private String dep;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

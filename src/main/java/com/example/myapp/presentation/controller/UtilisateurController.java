@@ -165,7 +165,7 @@ public  ResponseEntity<String> processForgotPassword(HttpServletRequest request,
         mailSender.send(message);
     }
 
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PostMapping(path = "/changePassword")
     ResponseEntity<String> changePassword(@RequestBody Map<String,String> requestMap){
         try {

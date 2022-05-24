@@ -43,10 +43,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST,"/authenticate").permitAll()
-                    .antMatchers(HttpMethod.POST,"/utilisateur/forgotPassword").permitAll()
+                .antMatchers(HttpMethod.POST,"/logout").permitAll()
+                .antMatchers(HttpMethod.POST,"/utilisateur/forgotPassword").permitAll()
                     .antMatchers(HttpMethod.GET,"/utilisateur/username").permitAll()
-                    .antMatchers(HttpMethod.POST,"/reset_password/**").permitAll()
-                    .antMatchers(HttpMethod.GET,"/reset_password/**").permitAll()
+                    .antMatchers(HttpMethod.GET,"/messages/**").permitAll()
 
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()

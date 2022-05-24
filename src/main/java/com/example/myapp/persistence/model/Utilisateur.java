@@ -11,6 +11,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,7 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Utilisateur {
+public class Utilisateur implements Serializable  {
     @SequenceGenerator(
             name = "utilisateur_sequence",
             sequenceName ="utilisateur_sequence",
@@ -41,6 +42,8 @@ public class Utilisateur {
     private String userPassword;
     @Column(name = "EMAIL")
     private String email;
+    @Column(name = "connected", nullable = false)
+    private Boolean connected = false;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

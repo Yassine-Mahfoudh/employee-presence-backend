@@ -45,6 +45,9 @@ public class Event {
     @Column(name="rrule")
     private String rrule;
 
+    @Column(name="description")
+    private String description;
+
     public Event(String title, String start, String end, String employee,String rrule) {
         this.title = title;
         this.start = start;

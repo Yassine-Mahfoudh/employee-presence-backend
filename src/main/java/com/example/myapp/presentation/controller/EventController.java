@@ -28,7 +28,7 @@ public class EventController {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Event> getListEvents() {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la liste des évènements dans le calendrier ");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la liste des évènements");
             return iEventService.getEvents();
         } catch (Exception e) {
             throw new IllegalStateException("Error EventController in method getListEvents :: " + e.toString());

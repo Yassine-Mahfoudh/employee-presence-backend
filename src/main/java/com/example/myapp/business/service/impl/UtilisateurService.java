@@ -211,6 +211,39 @@ public class UtilisateurService implements IUtilisateurService {
         utilisateurRepository.save(utilisateur);
     }
 
+    @Override
+    public Utilisateur connect(Utilisateur user) {
+        Utilisateur dbUser = utilisateurRepository.findUtilisateurByuserName(user.getUserName());
+
+        if (dbUser != null) {
+
+            if (dbUser.getConnected()) {
+                throw new IllegalStateException("This user is already connected: " + dbUser.getUserName());
+            }
+                dbUser.setConnected(true);
+                return utilisateurRepository.save(dbUser);
+            }
+
+            user.setConnected(true);
+            return utilisateurRepository.save(user);
+        }
+
+
+    @Override
+    public Utilisateur disconnect(Utilisateur user) {
+        if (user == null) {
+            return null;
+        }
+
+            Utilisateur dbUser = utilisateurRepository.findUtilisateurByuserName(user.getUserName());
+        if (dbUser == null) {
+            return user;
+        }
+
+        dbUser.setConnected(false);
+        return utilisateurRepository.save(dbUser);
+    }
+
 }
 
 

@@ -45,6 +45,17 @@ public class DepartementController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
+    @GetMapping(value = "/find/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Departement> getDepartementByName(@PathVariable("name") String name) {
+        try {
+            Departement departement = iDepartementService.getDepartementByName(name);
+            return new ResponseEntity<>(departement, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new IllegalStateException("Error DepartementController in method getDepartementByNamexw :: " + e.toString());
+        }
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Departement addDepartement(@RequestBody Departement departement) {

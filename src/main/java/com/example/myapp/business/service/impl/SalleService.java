@@ -74,6 +74,7 @@ public class SalleService implements ISalleService {
             ups.setNum(salle.getNum());
             ups.setNbposte(salle.getNbposte());
             ups.setType(salle.getType());
+            ups.setDep(salle.getDep());
             ups.setPourcentagePres(salle.getPourcentagePres());
             ups.setDateupdate(new Timestamp(new Date().getTime()));
             ups.setId(id);

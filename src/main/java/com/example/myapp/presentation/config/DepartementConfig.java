@@ -16,9 +16,9 @@ public class DepartementConfig {
             DepartementRepository departementRepository){
         return args -> {
 
-            Departement departement1 = new Departement("Developpement", 10);
-            Departement departement2 = new Departement("Test", 2);
-            Departement departement3 = new Departement("Maintenance", 6);
+            Departement departement1 = new Departement("Developpement", 0);
+            Departement departement2 = new Departement("Test", 0);
+            Departement departement3 = new Departement("Maintenance", 0);
 
 
             departementRepository.saveAll(

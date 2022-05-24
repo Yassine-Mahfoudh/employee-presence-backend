@@ -46,6 +46,24 @@ public class DepartementService implements IDepartementService {
         }
 
     }
+
+    @Override
+    public Departement getDepartementByName(String name){
+        try {
+            if (name == null)
+                return new Departement();
+            Departement d = departementRepository.findDepartementByName(name);
+            if (d == null)
+                return new Departement();
+            log.info("Fetching department with name :{} ",name);
+
+            return d;
+        } catch (Exception e){
+            throw new IllegalStateException("Error DepartementService in method getDepartementByName :: " + e.toString());
+        }
+
+    }
+
     @Override
     public Departement addDepartement(Departement dep) {
         try {

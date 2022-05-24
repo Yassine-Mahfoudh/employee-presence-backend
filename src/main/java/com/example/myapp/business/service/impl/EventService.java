@@ -84,6 +84,8 @@ public class EventService implements IEventService {
         try {
             Event upevent = eventRepository.findEventById(id);
             upevent.setTitle(event.getTitle());
+            upevent.setDescription(event.getDescription());
+
             upevent.setStart(event.getStart());
             upevent.setEnd(event.getEnd());
             upevent.setId(id);
