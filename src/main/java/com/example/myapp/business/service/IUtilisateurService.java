@@ -1,11 +1,12 @@
 package com.example.myapp.business.service;
 
-import com.example.myapp.persistence.model.Employee;
+import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.model.Utilisateur;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface IUtilisateurService {
     public List<Utilisateur> getListUtilisateur();
@@ -13,6 +14,8 @@ public interface IUtilisateurService {
     public void deleteUtilisateur(Long id);
     public Utilisateur updateUtilisateur(Utilisateur utilisateur,Long id);
     public Utilisateur getUtilisateurById(Long id);
+
+    Set<Profil> getUtilisateurRoleByEmpId(Long id);
 
     Utilisateur getUtilisateurByuserName(String userName);
 

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 @RestController
@@ -48,6 +49,17 @@ public class UtilisateurController {
             throw new IllegalStateException("Error UtilisateurController in method getListUtilisateur:" +e.toString());
         }
 
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
+    @GetMapping(value = "/find/role/emp/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<Profil>> getUtilisateurRoleByEmpId (@PathVariable("id") Long id) {
+        try{ Set<Profil> roles = iUtilisateurService.getUtilisateurRoleByEmpId(id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'utilisateur numéro : "+id);
+            return new ResponseEntity<Set<Profil>>(roles, HttpStatus.OK);}
+        catch (Exception e){
+            throw new IllegalStateException("Error UtilisateurController in method getUtilisateurById:" +e.toString());
+        }
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")

@@ -75,14 +75,14 @@ public class Employee implements Serializable {
     private String project;
 
     @JoinColumn(name = "salle_id", insertable = false, updatable = false)
-    private int salle;
+    private String salle;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address, String phonenumber, String project, int salle,String manager) {
+    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address, String phonenumber, String project, String salle,String manager) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.role = role;

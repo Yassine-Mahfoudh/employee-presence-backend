@@ -58,17 +58,18 @@ public class Utilisateur implements Serializable  {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "ID_EMP")
     private Employee employee;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Profil> profils;
 
-    public Utilisateur(String userName, String userPassword, String email, Set<Profil> profils) {
+    public Utilisateur(String userName, String userPassword, String email, Set<Profil> profils,Employee employee) {
         this.userName = userName;
         this.userPassword = userPassword;
         this.email = email;
         this.profils = profils;
+        this.employee=employee;
     }
 }

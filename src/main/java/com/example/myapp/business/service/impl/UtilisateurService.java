@@ -1,6 +1,7 @@
 package com.example.myapp.business.service.impl;
 
 import com.example.myapp.business.service.IUtilisateurService;
+import com.example.myapp.persistence.model.Employee;
 import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.model.Utilisateur;
 import com.example.myapp.persistence.repository.EmployeeRepository;
@@ -68,6 +69,22 @@ public class UtilisateurService implements IUtilisateurService {
             throw new IllegalStateException("Error UtilisateurService in method getUtilisateurById :: " + e.toString());
         }
     }
+
+    @Override
+    public Set<Profil> getUtilisateurRoleByEmpId(Long id) {
+        try {
+            if(id == null)
+                return null;
+            Utilisateur p = utilisateurRepository.findUtilisateurById(id);
+            if ( p == null )
+                return null;
+            log.info("Fetching role user with id :{} ",id);
+            return p.getProfils();
+        } catch (Exception e) {
+            throw new IllegalStateException("Error UtilisateurService in method getUtilisateurById :: " + e.toString());
+        }
+    }
+
     @Override
     public Utilisateur getUtilisateurByuserName(String userName) {
         try {
@@ -90,9 +107,14 @@ public class UtilisateurService implements IUtilisateurService {
     @Override
     public Utilisateur addUtilisateur(Utilisateur obj) {
         try {
-            Profil role = profilRepository.findProfilByName("USER");
             Set<Profil> userRoles = new HashSet<>();
-            userRoles.add(role);
+            for(Profil profil: obj.getProfils() ){
+                Profil role = profilRepository.findProfilByName(profil.getName());
+                userRoles.add(role);
+            }
+
+
+
             Utilisateur objNomUnique = utilisateurRepository.findUtilisateurByuserName(obj.getUserName());
             if (objNomUnique != null)
                 throw new IllegalStateException("Utilisateur login token");
@@ -100,6 +122,7 @@ public class UtilisateurService implements IUtilisateurService {
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
             //obj.setUserPassword(obj.getUserPassword());
             obj.setProfils(userRoles);
+            obj.setEmployee(new Employee());
             log.info("Saving new user {} to the databse ",obj.getUserName());
 
             return utilisateurRepository.save(obj);

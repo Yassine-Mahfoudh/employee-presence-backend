@@ -48,11 +48,10 @@ public class Event {
     @Column(name="description")
     private String description;
 
-    public Event(String title, String start, String end, String employee,String rrule) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.employee = employee;
-        this.rrule=rrule;
-    }
+    @Column(name="color")
+    private String color;
+
+
+
+
 }
