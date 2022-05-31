@@ -13,6 +13,9 @@ public interface IUtilisateurService {
     public Utilisateur addUtilisateur(Utilisateur obj);
     public void deleteUtilisateur(Long id);
     public Utilisateur updateUtilisateur(Utilisateur utilisateur,Long id);
+
+    Set<Profil> getListUtilisateurProfils(Long id);
+
     public Utilisateur getUtilisateurById(Long id);
 
     Set<Profil> getUtilisateurRoleByEmpId(Long id);

@@ -52,6 +52,20 @@ public class UtilisateurController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
+    @GetMapping(value = "/find/profils/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public Set<Profil> getListUtilisateurProfils(@PathVariable("id") Long id) {
+        try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la liste des profils  de l'utilisateur "+id);
+            return iUtilisateurService.getListUtilisateurProfils(id);
+        }catch(Exception e){
+            throw new IllegalStateException("Error UtilisateurController in method getListUtilisateurProfils:" +e.toString());
+        }
+
+    }
+
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
     @GetMapping(value = "/find/role/emp/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<Profil>> getUtilisateurRoleByEmpId (@PathVariable("id") Long id) {
         try{ Set<Profil> roles = iUtilisateurService.getUtilisateurRoleByEmpId(id);

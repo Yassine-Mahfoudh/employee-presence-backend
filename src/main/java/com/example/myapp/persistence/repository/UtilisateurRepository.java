@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
     @Query("SELECT s FROM Utilisateur s where s.id=:id")
@@ -21,10 +23,13 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
     @Query("SELECT u FROM Utilisateur u where u.userName =:userName")
     public  Utilisateur findUtilisateurByuserName(@Param("userName") String userName);
 
+    @Query("SELECT u FROM Utilisateur u where u.userName =:userName")
+    public  Utilisateur findUtilisateurProfils(@Param("userName") String userName);
+
     @Query("SELECT u FROM Utilisateur u where u.resetPasswordToken =:resetPasswordToken")
     public Utilisateur findByResetPasswordToken(String resetPasswordToken);
 
-
+    public List<Utilisateur> findAllByOrderByIdAsc();
 
 
 }

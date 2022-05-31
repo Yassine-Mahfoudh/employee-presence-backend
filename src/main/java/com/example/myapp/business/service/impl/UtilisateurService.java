@@ -50,11 +50,23 @@ public class UtilisateurService implements IUtilisateurService {
     public List<Utilisateur> getListUtilisateur(){
         try {
             log.info("Fetching all users ");
-            return utilisateurRepository.findAll();
+            return utilisateurRepository.findAllByOrderByIdAsc();
         } catch (Exception e) {
             throw  new IllegalStateException("Error UtilisateurService in method getListUtilisateur " + e.toString());
         }
     }
+
+    @Override
+    public Set<Profil> getListUtilisateurProfils(Long id){
+        try {
+            log.info("Fetching all users ");
+            Set <Profil> profils = utilisateurRepository.getById(id).getProfils();
+            return profils ;
+        } catch (Exception e) {
+            throw  new IllegalStateException("Error UtilisateurService in method getListUtilisateurProfils " + e.toString());
+        }
+    }
+
     @Override
     public Utilisateur getUtilisateurById(Long id) {
         try {
@@ -135,10 +147,16 @@ public class UtilisateurService implements IUtilisateurService {
     public Utilisateur updateUtilisateur(Utilisateur utilisateur,Long id) {
         try {
             Utilisateur obj = utilisateurRepository.findUtilisateurById(id);
+            Set<Profil> userRoles = new HashSet<>();
+            for(Profil profil: utilisateur.getProfils() ){
+                Profil role = profilRepository.findProfilByName(profil.getName());
+                userRoles.add(role);
+            }
            obj.setUserName(utilisateur.getUserName());
            obj.setUserPassword(getEncodedPassword(utilisateur.getUserPassword()));
            obj.setEmail(utilisateur.getEmail());
            obj.setUpdatedate(new Timestamp(new Date().getTime()));
+           obj.setProfils(userRoles);
            obj.setId(id);
             log.info("updating user {} to the database ",utilisateur.getUserName());
             return utilisateurRepository.save(obj);
