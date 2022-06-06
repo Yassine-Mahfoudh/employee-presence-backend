@@ -47,6 +47,17 @@ public class DemandeController {
             throw new IllegalStateException("Error DemandeController in method getDemandeById :: " + e.toString());
         }
     }
+//    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
+//    @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Demande> getDemandeByEmpId(@PathVariable("id") Long id) {
+//        try {
+//            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la demande numéro : "+id);
+//            Demande demande = iDemandeService.getDemandeById(id);
+//            return new ResponseEntity<>(demande, HttpStatus.OK);
+//        } catch (Exception e) {
+//            throw new IllegalStateException("Error DemandeController in method getDemandeById :: " + e.toString());
+//        }
+//    }
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Demande addDemande(@RequestBody Demande demande) {

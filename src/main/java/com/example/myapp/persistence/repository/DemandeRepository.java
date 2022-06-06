@@ -14,7 +14,7 @@ public interface DemandeRepository
     @Query("select d from Demande d where d.id=:id ")
     public Demande findDemandeById(@Param("id") Long id);
 
-    @Query("select d from Demande d where d.name=:name ")
-    public Demande findDemandeByName(@Param("name") String name);
+    @Query("select d from Demande d where d.title=:title ")
+    public Demande findDemandeBytitle(@Param("title") String title);
 
 }

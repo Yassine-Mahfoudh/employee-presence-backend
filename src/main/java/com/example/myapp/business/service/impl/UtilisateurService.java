@@ -13,12 +13,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
 import java.util.*;
@@ -41,7 +46,8 @@ public class UtilisateurService implements IUtilisateurService {
     @Autowired
     private ProfilRepository profilRepository;
 
-
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -130,17 +136,44 @@ public class UtilisateurService implements IUtilisateurService {
             Utilisateur objNomUnique = utilisateurRepository.findUtilisateurByuserName(obj.getUserName());
             if (objNomUnique != null)
                 throw new IllegalStateException("Utilisateur login token");
+            sendEmail(obj.getEmail(), obj.getUserName(), obj.getUserPassword());
+
             obj.setCreationdate(new Timestamp(new Date().getTime()));
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
             //obj.setUserPassword(obj.getUserPassword());
             obj.setProfils(userRoles);
             obj.setEmployee(new Employee());
+
             log.info("Saving new user {} to the databse ",obj.getUserName());
 
             return utilisateurRepository.save(obj);
         } catch (Exception e) {
             throw  new IllegalStateException("Error UtilisateurService in method addUtilisateur " + e.toString());
         }
+    }
+
+    public void sendEmail(String recipientEmail, String username, String password)
+            throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("ymahfoudh55@gmail.com", "ST2i managment");
+        helper.setTo(recipientEmail);
+
+        String subject = "voici vos données de connexion";
+        String link="http://localhost:4200/login";
+        String content = "<p>Bonjour,</p>"
+                + "<p>Pour accéder à votre compte utilisez ces identifiants</p>"
+                + "<p> your login :" + username+" </p>"
+                + "<p> your password :" + password+" </p>"
+                 + "<p>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</p>"
+                + "<p><a href=\"" + link + "\">S'identifier</a></p>";
+
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
     }
 
     @Override
@@ -153,7 +186,7 @@ public class UtilisateurService implements IUtilisateurService {
                 userRoles.add(role);
             }
            obj.setUserName(utilisateur.getUserName());
-           obj.setUserPassword(getEncodedPassword(utilisateur.getUserPassword()));
+         //  obj.setUserPassword(getEncodedPassword(utilisateur.getUserPassword()));
            obj.setEmail(utilisateur.getEmail());
            obj.setUpdatedate(new Timestamp(new Date().getTime()));
            obj.setProfils(userRoles);
@@ -252,7 +285,7 @@ public class UtilisateurService implements IUtilisateurService {
         utilisateurRepository.save(utilisateur);
     }
 
-    @Override
+    /*@Override
     public Utilisateur connect(Utilisateur user) {
         Utilisateur dbUser = utilisateurRepository.findUtilisateurByuserName(user.getUserName());
 
@@ -284,7 +317,7 @@ public class UtilisateurService implements IUtilisateurService {
         dbUser.setConnected(false);
         return utilisateurRepository.save(dbUser);
     }
-
+*/
 }
 
 

@@ -14,6 +14,8 @@ public interface EmployeeRepository  extends JpaRepository<Employee,Long> {
 
 
 
-    @Query("select e from Employee e where e.lastname=:lastname ")
-    public Employee findEmployeeByLastname(@Param("lastname") String lastname);
+    @Query("select e from Employee e where e.firstname=:firstname ")
+    public Employee findEmployeeByName(@Param("firstname") String firstname);
+
+
 }

@@ -35,8 +35,10 @@ public interface IUtilisateurService {
     Utilisateur getByResetPasswordToken(String token);
 
     void updatePassword(Utilisateur utilisateur, String newPassword);
-
+/*
     Utilisateur connect(Utilisateur user);
 
     Utilisateur disconnect(Utilisateur user);
+    */
+
 }

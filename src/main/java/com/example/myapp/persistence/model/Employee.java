@@ -14,6 +14,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -51,6 +52,11 @@ public class Employee implements Serializable {
     private String phonenumber;
     @Column(name = "Employee_manager")
     private String manager;
+    @Column(name = "Employee_managerid")
+    private long managerid;
+
+    @Transient
+    private List<String> listeProfils;
 
 
     @CreationTimestamp

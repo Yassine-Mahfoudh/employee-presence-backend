@@ -72,4 +72,5 @@ public class Utilisateur implements Serializable  {
         this.profils = profils;
         this.employee=employee;
     }
+
 }

@@ -32,10 +32,24 @@ public class Demande implements Serializable {
             generator = "Demande_sequence"
     )
     private Long id;
-    @Column(name = "Name")
-    private String name;
-    @Column(name = "Motive")
-    private String motive;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "datedebut")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String datedebut;
+
+    @Column(name = "datefin")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String datefin;
+
+    @Column(name = "empid")
+    private Long empid;
+
+    @Column(name = "etat")
+    private String etat;
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -67,11 +81,11 @@ public class Demande implements Serializable {
     @JoinColumn(name = "emp_id", insertable = false, updatable = false)
     private Employee employee;
 
-
-    public Demande(String name, String motive, LocalDate startdate, LocalDate enddate) {
-        this.name = name;
-        this.motive = motive;
-        this.startdate = startdate;
-        this.enddate = enddate;
+    public Demande(String title, String description, String datedebut, String datefin, Long empid) {
+        this.title = title;
+        this.description = description;
+        this.datedebut = datedebut;
+        this.datefin = datefin;
+        this.empid = empid;
     }
 }

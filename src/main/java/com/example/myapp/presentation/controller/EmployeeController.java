@@ -45,6 +45,18 @@ public class EmployeeController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_RH','ROLE_MANAGER')")
+    @GetMapping(value = "/findname/{firstname}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Employee> getEmployeeByName(@PathVariable("firstname") String firstname) {
+        try {
+            Employee employee = iEmployeeService.getEmployeeByName(firstname);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'employé avec le nom : "+firstname);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new IllegalStateException("Error EmployeeController in method getEmployeeByName :: " + e.toString());
+        }
+    }
+
 
     @PreAuthorize("hasAnyRole('ROLE_RH')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -1,14 +1,18 @@
 package com.example.myapp.business.service.impl;
 
 import com.example.myapp.business.service.IEmployeeService;
+import com.example.myapp.business.service.IUtilisateurService;
 import com.example.myapp.persistence.model.Employee;
+import com.example.myapp.persistence.model.Profil;
 import com.example.myapp.persistence.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,12 +23,22 @@ import java.util.List;
 public class EmployeeService implements IEmployeeService {
 
     public final EmployeeRepository employeeRepository;
+    @Autowired
+    public final IUtilisateurService iUtilisateurService;
 
     @Override
     public List<Employee> getListEmployee() {
         try {
             log.info("Fetching all employees ");
-            return employeeRepository.findAll();
+            List<Employee> employees =employeeRepository.findAll();
+            for(Employee employee :employees){
+                List<String> list_profil = new ArrayList<>();
+                for(Profil profil :this.iUtilisateurService.getListUtilisateurProfils(employee.getId())){
+                    list_profil.add(profil.getName());
+                }
+                employee.setListeProfils(list_profil);
+            }
+            return employees;
         } catch (Exception e){
             throw new IllegalStateException("Error EmployeeService in method getListEmployee :: " + e.toString());
 
@@ -48,12 +62,29 @@ public class EmployeeService implements IEmployeeService {
 
     }
 
+    @Override
+    public Employee getEmployeeByName(String firstname){
+        try {
+            if (firstname == null)
+                return new Employee();
+            Employee e = employeeRepository.findEmployeeByName(firstname);
+            if (e == null)
+                return new Employee();
+            log.info("Fetching employee with firstname :{} ",firstname);
+
+            return e;
+        } catch (Exception e){
+            throw new IllegalStateException("Error EmployeeService in method getEmployeeByName :: " + e.toString());
+        }
+
+    }
+
 
 
     @Override
     public Employee addEmployee(Employee emp) {
         try {
-            Employee empNomUnique = employeeRepository.findEmployeeByLastname(emp.getLastname());
+            Employee empNomUnique = employeeRepository.findEmployeeByName(emp.getFirstname());
 
             if ( empNomUnique != null)
                 throw new IllegalStateException("Employee name token");
@@ -74,6 +105,7 @@ public class EmployeeService implements IEmployeeService {
             upemp.setFirstname(employee.getFirstname());
             upemp.setRole(employee.getRole());
             upemp.setManager(employee.getManager());
+            upemp.setManagerid(employee.getManagerid());
             upemp.setStatus(employee.getStatus());
             upemp.setBirthdate(employee.getBirthdate());
             upemp.setAddress(employee.getAddress());
