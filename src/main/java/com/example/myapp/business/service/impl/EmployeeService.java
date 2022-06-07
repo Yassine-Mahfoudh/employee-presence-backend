@@ -111,6 +111,7 @@ public class EmployeeService implements IEmployeeService {
             upemp.setPhonenumber(employee.getPhonenumber());
             upemp.setProject(employee.getProject());
             upemp.setSalle(employee.getSalle());
+            upemp.setGender(employee.getGender());
 
             upemp.setUpdatedate(new Timestamp(new Date().getTime()));
             upemp.setId(id);

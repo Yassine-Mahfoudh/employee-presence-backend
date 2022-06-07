@@ -87,6 +87,7 @@ public class DepartementService implements IDepartementService {
             updep.setName(departement.getName());
             updep.setUpdatedate(new Timestamp(new Date().getTime()));
             updep.setId(id);
+            updep.setNbsalles(departement.getNbsalles());
             log.info("updating departement {} to the database ",departement.getName());
 
             return departementRepository.save(updep);

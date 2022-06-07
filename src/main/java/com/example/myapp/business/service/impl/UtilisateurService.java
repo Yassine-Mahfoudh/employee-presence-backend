@@ -143,7 +143,7 @@ public class UtilisateurService implements IUtilisateurService {
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
             //obj.setUserPassword(obj.getUserPassword());
             obj.setProfils(userRoles);
-            obj.setEmployee(new Employee("","","",LocalDate.now(),"","","Non séléctionné","Non séléctionné","Non séléctionné")
+            obj.setEmployee(new Employee("","","",LocalDate.now(),"","","Non séléctionné","Non séléctionné","Non séléctionné","")
             );
 
             log.info("Saving new user {} to the databse ",obj.getUserName());

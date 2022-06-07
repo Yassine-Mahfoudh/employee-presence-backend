@@ -52,6 +52,15 @@ public class Employee implements Serializable {
     private String manager;
     @Column(name = "Employee_managerid")
     private long managerid;
+    @JoinColumn(name = "project_id", insertable = false, updatable = false)
+    private String project;
+
+    @JoinColumn(name = "salle", insertable = false, updatable = false)
+    private String salle;
+
+    @JoinColumn(name = "gender", insertable = false, updatable = false)
+    private String gender;
+
 
     @Transient
     private List<String> listeProfils;
@@ -75,18 +84,14 @@ public class Employee implements Serializable {
     //private Employee manager;
 
 
-    @JoinColumn(name = "project_id", insertable = false, updatable = false)
-    private String project;
 
-    @JoinColumn(name = "salle_id", insertable = false, updatable = false)
-    private String salle;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String lastname, String firstname, String role, LocalDate birthdate, String address, String phonenumber, String project, String salle,String manager) {
+    public Employee(String lastname, String firstname, String role, LocalDate birthdate, String address, String phonenumber, String project, String salle,String manager, String gender) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.role = role;
@@ -96,5 +101,6 @@ public class Employee implements Serializable {
         this.project = project;
         this.salle = salle;
         this.manager=manager;
+        this.gender=gender;
     }
 }
