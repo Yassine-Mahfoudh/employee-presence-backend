@@ -24,7 +24,7 @@ public class DepartementService implements IDepartementService {
     public List<Departement> getListDepartement() {
         try {
             log.info("Fetching all departments ");
-            return departementRepository.findAll();
+            return departementRepository.findAllByOrderByIdAsc();
         } catch (Exception e){
             throw new IllegalStateException("Error DepartementService in method getListDepartement :: " + e.toString());
         }
@@ -73,6 +73,7 @@ public class DepartementService implements IDepartementService {
                 throw new IllegalStateException("Departement name token");
 
             dep.setCreationdate(new Timestamp(new Date().getTime()));
+            dep.setNbsalles(0);
             log.info("Saving new departement {} to the databse ",dep.getName());
             return departementRepository.save(dep);
         } catch (Exception e) {
@@ -84,7 +85,6 @@ public class DepartementService implements IDepartementService {
         try {
             Departement updep = departementRepository.findDepartementById(id);
             updep.setName(departement.getName());
-            updep.setNbsalles(departement.getNbsalles());
             updep.setUpdatedate(new Timestamp(new Date().getTime()));
             updep.setId(id);
             log.info("updating departement {} to the database ",departement.getName());

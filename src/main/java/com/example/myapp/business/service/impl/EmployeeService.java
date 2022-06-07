@@ -30,7 +30,7 @@ public class EmployeeService implements IEmployeeService {
     public List<Employee> getListEmployee() {
         try {
             log.info("Fetching all employees ");
-            List<Employee> employees =employeeRepository.findAll();
+            List<Employee> employees =employeeRepository.findAllByOrderByIdAsc();
             for(Employee employee :employees){
                 List<String> list_profil = new ArrayList<>();
                 for(Profil profil :this.iUtilisateurService.getListUtilisateurProfils(employee.getId())){
@@ -106,7 +106,6 @@ public class EmployeeService implements IEmployeeService {
             upemp.setRole(employee.getRole());
             upemp.setManager(employee.getManager());
             upemp.setManagerid(employee.getManagerid());
-            upemp.setStatus(employee.getStatus());
             upemp.setBirthdate(employee.getBirthdate());
             upemp.setAddress(employee.getAddress());
             upemp.setPhonenumber(employee.getPhonenumber());

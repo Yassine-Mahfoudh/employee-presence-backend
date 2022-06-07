@@ -25,7 +25,7 @@ public class EventService implements IEventService {
     public List<Event> getEvents(){
         try{
             log.info("Fetching all events ");
-            return eventRepository.findAll();
+            return eventRepository.findAllByOrderByIdAsc();
         } catch (Exception e){
             throw new IllegalStateException("Error EventService in method getEvents " + e.toString());
         }

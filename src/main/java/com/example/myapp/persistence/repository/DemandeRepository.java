@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface DemandeRepository
@@ -16,5 +18,8 @@ public interface DemandeRepository
 
     @Query("select d from Demande d where d.title=:title ")
     public Demande findDemandeBytitle(@Param("title") String title);
+
+    public List<Demande> findAllByOrderByIdAsc();
+
 
 }

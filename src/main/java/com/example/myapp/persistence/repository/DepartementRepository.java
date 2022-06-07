@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DepartementRepository  extends JpaRepository<Departement,Long> {
     @Query("select d from Departement d where d.id=:id ")
@@ -13,4 +15,8 @@ public interface DepartementRepository  extends JpaRepository<Departement,Long> 
 
     @Query("select d from Departement d where d.name=:name ")
     public Departement findDepartementByName(@Param("name") String name);
+
+    public List<Departement> findAllByOrderByIdAsc();
+
+
 }

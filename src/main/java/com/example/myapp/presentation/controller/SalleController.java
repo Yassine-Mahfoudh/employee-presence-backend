@@ -48,7 +48,7 @@ public class SalleController {
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Salle addSalle(@RequestBody Salle salle) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Ajouter une salle demande");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Ajouter une salle salle");
             return iSalleService.addSalle(salle);
         } catch (Exception e) {
             throw new IllegalStateException("Error SalleController in method addSalle :: " + e.toString());
@@ -59,7 +59,7 @@ public class SalleController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle, @PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour la salle numéro : " +salle.getId());
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour la salle : " +salle.getNom());
             Salle updateS = iSalleService.updateSalle(salle,id);
             return new ResponseEntity<>(updateS, HttpStatus.OK);
         } catch (Exception e) {

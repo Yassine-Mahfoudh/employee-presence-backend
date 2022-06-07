@@ -41,7 +41,7 @@ public class LogAccessService implements ILogAccessService {
         try {
             log.info("Fetching all logaccess ");
 
-            return logAccessRepository.findAll();
+            return logAccessRepository.findAllByOrderByIdDesc();
         } catch (Exception e) {
             throw  new IllegalStateException("Error LogAcessService in method getListLogAcess " + e.toString());
         }

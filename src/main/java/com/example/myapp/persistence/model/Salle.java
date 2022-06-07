@@ -35,8 +35,8 @@ public class Salle {
     private Long id;
     @Column(name="Type")
     private String type;
-    @Column(name="Number")
-    private int num;
+    @Column(name="Nom")
+    private String nom;
     @Column(name="Desks_number")
     private int nbposte;
     @Column(name="Attendance_percentage")
@@ -63,10 +63,12 @@ public class Salle {
     @JoinColumn(name = "ID_SALLE")
     private Set<Employee> employees;
 
-    public Salle(String type, int num, int nbposte, int pourcentagePres) {
+    public Salle(String type, String nom, int nbposte, int pourcentagePres, String dep) {
         this.type = type;
-        this.num = num;
+        this.nom = nom;
         this.nbposte = nbposte;
         this.pourcentagePres = pourcentagePres;
+        this.dep=dep;
+
     }
 }

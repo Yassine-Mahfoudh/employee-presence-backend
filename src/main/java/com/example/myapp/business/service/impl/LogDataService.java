@@ -34,7 +34,7 @@ public class LogDataService implements ILogDataService {
     public List<LogData> getListLogData(){
         try {
             log.info("Fetching all logdata ");
-            return logDataRepository.findAll();
+            return logDataRepository.findAllByOrderByIdDesc();
         } catch (Exception e) {
             throw  new IllegalStateException("Error LogDataService in method getListLogData " + e.toString());
         }

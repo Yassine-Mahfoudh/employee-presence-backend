@@ -25,7 +25,7 @@ public class DemandeService implements IDemandeService {
     public List<Demande> getListDemande() {
         try {
             log.info("Fetching all demands ");
-            return demandeRepository.findAll();
+            return demandeRepository.findAllByOrderByIdAsc();
         } catch (Exception e){
             throw new IllegalStateException("Error DemandeService in method getListDemande :: " + e.toString());
 

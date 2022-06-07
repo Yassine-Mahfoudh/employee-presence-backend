@@ -22,7 +22,7 @@ public class ProfilService implements IProfilService {
     public List<Profil> getListProfil() {
         try {
             log.info("Fetching all profils ");
-            return profilRepository.findAll();
+            return profilRepository.findAllByOrderByIdAsc();
         } catch (Exception e){
             throw new IllegalStateException("Error ProfilService in method getListProfil :: " + e.toString());
 

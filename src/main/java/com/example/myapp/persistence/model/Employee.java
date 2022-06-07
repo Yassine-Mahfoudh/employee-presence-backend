@@ -42,8 +42,6 @@ public class Employee implements Serializable {
     private String firstname;
     @Column(name = "Employee_role")
     private String role;
-    @Column(name = "Employee_status")
-    private Boolean status;
     @Column(name = "Birth_date")
     private LocalDate birthdate;
     @Column(name = "Employee_address")
@@ -88,11 +86,10 @@ public class Employee implements Serializable {
     @JoinColumn(name = "emp_id")
     private Set<Demande> demandes;
 
-    public Employee(String lastname, String firstname, String role, Boolean status, LocalDate birthdate, String address, String phonenumber, String project, String salle,String manager) {
+    public Employee(String lastname, String firstname, String role, LocalDate birthdate, String address, String phonenumber, String project, String salle,String manager) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.role = role;
-        this.status = status;
         this.birthdate = birthdate;
         this.address = address;
         this.phonenumber = phonenumber;

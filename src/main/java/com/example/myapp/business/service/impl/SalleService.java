@@ -1,10 +1,7 @@
 package com.example.myapp.business.service.impl;
 
-import com.example.myapp.business.service.IDemandeService;
 import com.example.myapp.business.service.ISalleService;
-import com.example.myapp.persistence.model.Demande;
 import com.example.myapp.persistence.model.Salle;
-import com.example.myapp.persistence.repository.DemandeRepository;
 import com.example.myapp.persistence.repository.SalleRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +25,7 @@ public class SalleService implements ISalleService {
     public List<Salle> getListSalle() {
         try {
             log.info("Fetching all salles ");
-            return salleRepository.findAll();
+            return salleRepository.findAllByOrderByIdAsc();
         } catch (Exception e){
             throw new IllegalStateException("Error SalleService in method getListSalle :: " + e.toString());
 
@@ -55,13 +52,13 @@ public class SalleService implements ISalleService {
     @Override
     public Salle addSalle(Salle salle) {
         try {
-            Salle objNomUnique = salleRepository.findSalleByNum(salle.getNum());
+            Salle objNomUnique = salleRepository.findSalleByNom(salle.getNom());
 
             if ( objNomUnique != null)
                 throw new IllegalStateException("Salle name token");
 
             salle.setDatecreation(new Timestamp(new Date().getTime()));
-            log.info("Saving new salle {} to the databse ",salle.getNum());
+            log.info("Saving new salle {} to the databse ",salle.getNom());
             return salleRepository.save(salle);
         } catch (Exception e) {
             throw new IllegalStateException("Error SalleService in method addSalle :: " + e.toString());
@@ -71,14 +68,14 @@ public class SalleService implements ISalleService {
     public Salle updateSalle(Salle salle,Long id) {
         try {
             Salle ups = salleRepository.findSalleById(salle.getId());
-            ups.setNum(salle.getNum());
+            ups.setNom(salle.getNom());
             ups.setNbposte(salle.getNbposte());
             ups.setType(salle.getType());
             ups.setDep(salle.getDep());
             ups.setPourcentagePres(salle.getPourcentagePres());
             ups.setDateupdate(new Timestamp(new Date().getTime()));
             ups.setId(id);
-            log.info("updating salle {} to the database ",salle.getNum());
+            log.info("updating salle {} to the database ",salle.getNom());
             return salleRepository.save(ups);
         }
         catch (Exception e) {

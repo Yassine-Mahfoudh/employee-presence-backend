@@ -26,6 +26,7 @@ import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @AllArgsConstructor
@@ -142,7 +143,8 @@ public class UtilisateurService implements IUtilisateurService {
             obj.setUserPassword(getEncodedPassword(obj.getUserPassword()));
             //obj.setUserPassword(obj.getUserPassword());
             obj.setProfils(userRoles);
-            obj.setEmployee(new Employee());
+            obj.setEmployee(new Employee("","","",LocalDate.now(),"","","Non séléctionné","Non séléctionné","Non séléctionné")
+            );
 
             log.info("Saving new user {} to the databse ",obj.getUserName());
 

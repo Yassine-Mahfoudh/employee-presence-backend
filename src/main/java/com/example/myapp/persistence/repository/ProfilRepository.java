@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProfilRepository extends JpaRepository<Profil,Long> {
     @Query("select p from Profil p where p.id=:id")
@@ -13,5 +15,8 @@ public interface ProfilRepository extends JpaRepository<Profil,Long> {
 
     @Query("select p from Profil p where p.name=:name")
     public Profil findProfilByName(@Param("name") String name);
+
+    public List<Profil> findAllByOrderByIdAsc();
+
 
 }

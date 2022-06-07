@@ -22,7 +22,7 @@ public class ProjectService implements IProjectService {
     public List<Project> getListProjet() {
         try {
             log.info("Fetching all projects ");
-            return projectRepository.findAll();
+            return projectRepository.findAllByOrderByIdAsc();
         } catch (Exception e){
             throw new IllegalStateException("Error ProjetService in method getListProjet :: " + e.toString());
 

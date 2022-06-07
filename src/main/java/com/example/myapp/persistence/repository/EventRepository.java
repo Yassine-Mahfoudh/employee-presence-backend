@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface EventRepository extends JpaRepository<Event,Long> {
 
@@ -14,4 +16,7 @@ public interface EventRepository extends JpaRepository<Event,Long> {
 
     @Query("select d from Event d where d.title=:title ")
     public Event findEventByTitle(@Param("title") String title);
+
+    public List<Event> findAllByOrderByIdAsc();
+
 }
