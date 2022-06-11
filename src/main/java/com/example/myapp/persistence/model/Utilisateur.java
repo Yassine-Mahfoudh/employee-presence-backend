@@ -42,8 +42,9 @@ public class Utilisateur implements Serializable  {
     private String userPassword;
     @Column(name = "EMAIL")
     private String email;
-    @Column(name = "connected", nullable = false)
-    private Boolean connected = false;
+
+    public static final String DIRECTORY = "C:/Users/HP/Desktop/pfe/src/assets/img/";
+
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

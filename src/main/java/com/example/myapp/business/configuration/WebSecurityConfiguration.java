@@ -48,6 +48,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET,"/utilisateur/username").permitAll()
                 .antMatchers(HttpMethod.POST,"/reset_password/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/reset_password/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/files/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/files/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/files").permitAll()
+                .antMatchers(HttpMethod.POST,"/upload").permitAll()
+
+
+
 
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()
