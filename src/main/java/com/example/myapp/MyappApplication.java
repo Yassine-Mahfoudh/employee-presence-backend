@@ -15,18 +15,18 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class MyappApplication implements CommandLineRunner {
+public class MyappApplication   {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyappApplication.class, args);
 	}
-	@Resource
+/*	@Resource
 	FilesStorageService storageService;
 	@Override
 	public void run(String... arg) throws Exception {
 		storageService.init();
 		storageService.deleteAll();
-	}
+	}*/
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
