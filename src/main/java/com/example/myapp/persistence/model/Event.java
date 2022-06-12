@@ -57,15 +57,18 @@ public class Event {
     @Column(name="frequence")
     private String frequency;
 
-    @Column(name="weekday")
-    private String weekday;
 
-    @Column(name="monthday")
-    private String monthday;
-
-    @Column(name="everyNmonth")
-    private Long everyNmonth;
-
-    @Column(name="everyNday")
-    private Long everyNday;
+    @Column(name = "employee_id")
+    private long employeeid;
+//    @Column(name="weekday")
+//    private String weekday;
+//
+//    @Column(name="monthday")
+//    private String monthday;
+//
+//    @Column(name="everyNmonth")
+//    private Long everyNmonth;
+//
+//    @Column(name="everyNday")
+//    private Long everyNday;
 }

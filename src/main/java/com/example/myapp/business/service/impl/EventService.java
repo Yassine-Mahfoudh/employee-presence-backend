@@ -91,12 +91,12 @@ public class EventService implements IEventService {
             upevent.setColor(event.getColor());
             upevent.setRrule(event.getRrule());
             upevent.setFrequency(event.getFrequency());
-            upevent.setEveryNday(event.getEveryNday());
-            upevent.setEveryNmonth(event.getEveryNmonth());
-            upevent.setWeekday(event.getWeekday());
-            upevent.setMonthday(event.getMonthday());
+//            upevent.setEveryNday(event.getEveryNday());
+//            upevent.setEveryNmonth(event.getEveryNmonth());
+//            upevent.setWeekday(event.getWeekday());
+//            upevent.setMonthday(event.getMonthday());
             upevent.setId(id);
-
+            upevent.setEmployeeid(event.getEmployeeid());
             log.info("updating  event {} to the databse ",event.getTitle());
 
             return eventRepository.save(upevent);
