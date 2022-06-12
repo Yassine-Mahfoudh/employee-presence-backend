@@ -57,6 +57,9 @@ public class Demande implements Serializable {
     @Column(name = "empprenom")
     private String empprenom;
 
+    @Column(name = "priorite")
+    private Long priorite;
+
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "Creation_date")

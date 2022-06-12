@@ -68,8 +68,8 @@ public class ProfilService implements IProfilService {
     public Profil updateProfil(Profil profil,Long id) {
         try {
             Profil upprof = profilRepository.findProfilById(profil.getId());
-            upprof.setName(profil.getName());
             upprof.setUpdatedate(new Timestamp(new Date().getTime()));
+            upprof.setDescription(profil.getDescription());
             upprof.setId(id);
             log.info("updating profil {} to the database ",profil.getName());
             return profilRepository.save(upprof);

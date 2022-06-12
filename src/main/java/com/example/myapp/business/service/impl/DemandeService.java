@@ -77,6 +77,7 @@ public class DemandeService implements IDemandeService {
             updem.setId(id);
             updem.setEmpid(demande.getEmpid());
             updem.setEtat(demande.getEtat());
+            updem.setPriorite(demande.getPriorite());
             log.info("updating demande {} to the database ",demande.getTitle());
 
             return demandeRepository.save(updem);
