@@ -22,7 +22,7 @@ public class ProjetController {
     private final IUtilisateurService iUtilisateurService;
 
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH','ROLE_USER','Role_MANAGER')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> getListProjet() {
         try {
@@ -33,7 +33,7 @@ public class ProjetController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_RH','ROLE_USER','Role_MANAGER')")
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> getProjetById(@PathVariable("id") Long id) {
         try {
