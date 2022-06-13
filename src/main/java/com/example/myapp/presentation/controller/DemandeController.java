@@ -73,7 +73,7 @@ public class DemandeController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Demande> updateDemandeById(@RequestBody Demande demande, @PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour la demande numéro : " +demande.getId());
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour une demande  : " +demande.getId());
             Demande updateDemande = iDemandeService.updateDemandeById(demande,id);
             return new ResponseEntity<>(updateDemande, HttpStatus.OK);
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class DemandeController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDemandeById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer la demande numéro  : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer une demande numéro  : ");
             iDemandeService.deleteDemandeById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
