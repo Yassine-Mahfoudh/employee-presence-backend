@@ -27,7 +27,7 @@ public class ProfilController {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Profil> getListProfil() {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la liste des profiles");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la liste des profils");
             return iProfilService.getListProfil();
         } catch (Exception e) {
             throw new IllegalStateException("Error ProfilController in method getListProfil :: " + e.toString());
@@ -46,21 +46,21 @@ public class ProfilController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Profil addProfil(@RequestBody Profil profil) {
-        try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Ajouter un nouveau profile");
-            return iProfilService.addProfil(profil);
-        } catch (Exception e) {
-            throw new IllegalStateException("Error ProfilController in method addProfil :: " + e.toString());
-        }
-    }
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public Profil addProfil(@RequestBody Profil profil) {
+//        try {
+//            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Ajouter un nouveau profil");
+//            return iProfilService.addProfil(profil);
+//        } catch (Exception e) {
+//            throw new IllegalStateException("Error ProfilController in method addProfil :: " + e.toString());
+//        }
+//    }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Profil> updateProfil(@RequestBody Profil profil, @PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour le profile numéro : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour un profil ");
             Profil updateProfil = iProfilService.updateProfil(profil,id);
             return new ResponseEntity<>(updateProfil, HttpStatus.OK);
         } catch (Exception e) {
@@ -68,16 +68,16 @@ public class ProfilController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteProfil(@PathVariable("id") Long id) {
-        try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer le profile numéro : "+id);
-            iProfilService.deleteProfil(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            throw new IllegalStateException("Error ProfilController in method deleteProfil :: " + e.toString());
-        }
-    }
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<?> deleteProfil(@PathVariable("id") Long id) {
+//        try {
+//            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer le profile numéro : "+id);
+//            iProfilService.deleteProfil(id);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } catch (Exception e) {
+//            throw new IllegalStateException("Error ProfilController in method deleteProfil :: " + e.toString());
+//        }
+//    }
 
 }

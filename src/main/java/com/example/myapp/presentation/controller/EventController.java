@@ -39,7 +39,7 @@ public class EventController {
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> getEventById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'évènement numéro : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter un évènement : ");
             Event event = iEventService.getEventById(id);
             return new ResponseEntity<>(event, HttpStatus.OK);
         } catch (Exception e) {
@@ -50,7 +50,7 @@ public class EventController {
     @GetMapping(value = "/find/title/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> getEventByTitle(@PathVariable("title") String title) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'évènement : "+title);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter un évènement  ");
             Event event = iEventService.getEventByTitle(title);
             return new ResponseEntity<>(event, HttpStatus.OK);
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class EventController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> updateEventById(@RequestBody Event event, @PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'évènement numéro : " +event.getId());
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour un évènement" );
             Event updateEvent = iEventService.updateEventById(event,id);
             return new ResponseEntity<>(updateEvent, HttpStatus.OK);
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class EventController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteEventById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer l'évènement numéro  : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer un évènement ");
             iEventService.deleteEventById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

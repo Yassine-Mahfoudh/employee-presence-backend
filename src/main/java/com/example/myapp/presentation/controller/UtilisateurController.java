@@ -113,7 +113,7 @@ public class UtilisateurController {
     @DeleteMapping(value="/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteUtilisateur(@PathVariable("id") Long id) {
         try{
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer l'utilisateur numéro : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer un utilisateur");
             iUtilisateurService.deleteUtilisateur(id);
         return new ResponseEntity<>(HttpStatus.OK);
         }catch(Exception e){
@@ -125,7 +125,7 @@ public class UtilisateurController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Utilisateur> updateUtilisateur(@RequestBody Utilisateur obj,  @PathVariable("id")  Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'utilisateur numéro : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour un utilisateur ");
             Utilisateur updateUtilisateur = iUtilisateurService.updateUtilisateur(obj, id);
         return new ResponseEntity<>(updateUtilisateur, HttpStatus.OK);
     }
@@ -138,7 +138,6 @@ public class UtilisateurController {
     @ResponseBody
     public String currentUserName() {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Obtenir le nom de l'utilisateur actuel");
 
             return iUtilisateurService.currentUserName();
         }catch (Exception e){

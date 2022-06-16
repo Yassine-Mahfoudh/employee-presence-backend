@@ -38,7 +38,6 @@ public class EmployeeController {
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id) {
         try {
             Employee employee = iEmployeeService.getEmployeeById(id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter l'employé numéro : "+id);
             return new ResponseEntity<>(employee, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error EmployeeController in method getEmployeeById :: " + e.toString());
@@ -75,7 +74,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> updateEmployeeById(@RequestBody Employee employee, @PathVariable("id") Long id) {
         try {
             Employee updateEmployee = iEmployeeService.updateEmployeeById(employee, id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'emplyé numéro : " +employee.getId());
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'employé numéro : " +employee.getFirstname()+" "+employee.getLastname());
             return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error EmployeeController in method updateEmployeeById :: " + e.toString());
@@ -87,7 +86,7 @@ public class EmployeeController {
     public ResponseEntity<?> deleteEmployeeById(@PathVariable("id") Long id) {
         try {
             iEmployeeService.deleteEmployeeById(id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'emplyé numéro : " +id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName()," Supprimer un employé ");
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error EmployeeController in method deleteEmployeeById :: " + e.toString());

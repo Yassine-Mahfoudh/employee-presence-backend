@@ -40,24 +40,14 @@ public class DemandeController {
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Demande> getDemandeById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la demande numéro : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter une demande  ");
             Demande demande = iDemandeService.getDemandeById(id);
             return new ResponseEntity<>(demande, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error DemandeController in method getDemandeById :: " + e.toString());
         }
     }
-//    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
-//    @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Demande> getDemandeByEmpId(@PathVariable("id") Long id) {
-//        try {
-//            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la demande numéro : "+id);
-//            Demande demande = iDemandeService.getDemandeById(id);
-//            return new ResponseEntity<>(demande, HttpStatus.OK);
-//        } catch (Exception e) {
-//            throw new IllegalStateException("Error DemandeController in method getDemandeById :: " + e.toString());
-//        }
-//    }
+
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_RH','ROLE_MANAGER')")
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Demande addDemande(@RequestBody Demande demande) {
@@ -73,7 +63,7 @@ public class DemandeController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Demande> updateDemandeById(@RequestBody Demande demande, @PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour une demande  : " +demande.getId());
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour une demande ") ;
             Demande updateDemande = iDemandeService.updateDemandeById(demande,id);
             return new ResponseEntity<>(updateDemande, HttpStatus.OK);
         } catch (Exception e) {
@@ -84,7 +74,7 @@ public class DemandeController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDemandeById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer une demande numéro  : ");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer une demande ");
             iDemandeService.deleteDemandeById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

@@ -36,8 +36,8 @@ public class SalleController {
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Salle> getSalleById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la salle numéro : "+id);
             Salle salle = iSalleService.getSalleById(id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter la salle "+salle.getNom());
             return new ResponseEntity<>(salle, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error SalleController in method getSalleById :: " + e.toString());
@@ -59,8 +59,8 @@ public class SalleController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle, @PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour la salle : " +salle.getNom());
             Salle updateS = iSalleService.updateSalle(salle,id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour une salle : ");
             return new ResponseEntity<>(updateS, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error SalleController in method updateSalle :: " + e.toString());
@@ -71,7 +71,7 @@ public class SalleController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteSalle(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer la salle numéro  : "+id);
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer une salle ");
             iSalleService.deleteSalle(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
