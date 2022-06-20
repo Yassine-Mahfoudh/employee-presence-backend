@@ -80,7 +80,7 @@ public class JwtService implements UserDetailsService {
     private void authenticate(String userName, String userPassword) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, userPassword));
-            String code_success="L'authentification est réussie";
+            String code_success="Authentification succeded";
 
             iLogAccessService.saveLogAccess(code_success,userName);
         } catch (DisabledException e) {
@@ -88,7 +88,7 @@ public class JwtService implements UserDetailsService {
 
         } catch (BadCredentialsException e) {
 
-            String code_erreur="Échec de l'authentification";
+            String code_erreur="Authentification failed";
             iLogAccessService.saveLogAccess(code_erreur,userName);
             throw new Exception("INVALID_CREDENTIALS", e);
         }

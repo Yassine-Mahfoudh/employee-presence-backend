@@ -37,7 +37,7 @@ public class DepartementController {
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departement> getDepartementById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter un département");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter le département numéro : "+id);
             Departement departement = iDepartementService.getDepartementById(id);
             return new ResponseEntity<>(departement, HttpStatus.OK);
         } catch (Exception e) {
@@ -49,7 +49,6 @@ public class DepartementController {
     @GetMapping(value = "/find/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departement> getDepartementByName(@PathVariable("name") String name) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter le département "+name);
             Departement departement = iDepartementService.getDepartementByName(name);
             return new ResponseEntity<>(departement, HttpStatus.OK);
         } catch (Exception e) {
@@ -72,8 +71,8 @@ public class DepartementController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departement> updateDepartementById(@RequestBody Departement departement, @PathVariable("id") Long id) {
         try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour le département numéro : "+id);
             Departement updateDepartement = iDepartementService.updateDepartementById(departement, id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour le département "+updateDepartement.getName());
             return new ResponseEntity<>(updateDepartement, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error DepartementController in method updateDepartementById :: " + e.toString());
@@ -84,7 +83,7 @@ public class DepartementController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDepartementById(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer un département ");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer le département numéro : "+id);
             iDepartementService.deleteDepartementById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

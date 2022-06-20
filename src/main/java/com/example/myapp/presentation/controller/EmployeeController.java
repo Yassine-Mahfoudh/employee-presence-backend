@@ -74,7 +74,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> updateEmployeeById(@RequestBody Employee employee, @PathVariable("id") Long id) {
         try {
             Employee updateEmployee = iEmployeeService.updateEmployeeById(employee, id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'employé numéro : " +employee.getFirstname()+" "+employee.getLastname());
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour l'employé  : " +employee.getFirstname()+" "+employee.getLastname());
             return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error EmployeeController in method updateEmployeeById :: " + e.toString());

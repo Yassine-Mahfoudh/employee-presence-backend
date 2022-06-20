@@ -37,9 +37,8 @@ public class ProjetController {
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> getProjetById(@PathVariable("id") Long id) {
         try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter le projet numéro : "+id);
             Project projet = iProjetService.getProjetById(id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Consulter le projet  : "+projet.getName());
-
             return new ResponseEntity<>(projet, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProjetController in method getProjetById :: " + e.toString());
@@ -61,8 +60,8 @@ public class ProjetController {
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> updateProjet(@RequestBody Project projet, @PathVariable("id") Long id) {
         try {
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour le projet numéro : "+id);
             Project updateProjet = iProjetService.updateProjet(projet, id);
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Mettre à jour le projet "+projet.getName());
             return new ResponseEntity<>(updateProjet, HttpStatus.OK);
         } catch (Exception e) {
             throw new IllegalStateException("Error ProjetController in method updateProjet :: " + e.toString());
@@ -73,7 +72,7 @@ public class ProjetController {
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteProjet(@PathVariable("id") Long id) {
         try {
-            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer un projet  ");
+            iLogDataService.saveLogData(iUtilisateurService.currentUserName(),"Supprimer le projet numéro : "+id);
             iProjetService.deleteProjet(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

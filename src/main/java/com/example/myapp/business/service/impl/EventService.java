@@ -3,6 +3,8 @@ package com.example.myapp.business.service.impl;
 import com.example.myapp.business.service.IEventService;
 import com.example.myapp.persistence.model.Event;
 import com.example.myapp.persistence.repository.EventRepository;
+import com.example.myapp.persistence.repository.eventDao;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class EventService implements IEventService {
 
     @Autowired
     EventRepository eventRepository;
+    
+    @Autowired
+    eventDao eventDao;
 
     @Override
     public List<Event> getEvents(){
@@ -118,6 +123,17 @@ public class EventService implements IEventService {
             throw new IllegalStateException("Error EventService in method deleteEventById :: " + e.toString());
         }
     }
+
+	@Override
+	public Integer getStatics(String event_start, String event_end, Long id_salle, Long dep_id, String event_title) {
+		try {
+        
+
+            return eventDao.getStatics(event_start, event_end, id_salle, dep_id, event_title);
+        } catch (Exception e) {
+            throw new IllegalStateException("Error EventService in method getStatics :: " + e.toString());
+        }
+	}
 
 }
 

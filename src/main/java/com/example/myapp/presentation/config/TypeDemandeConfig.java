@@ -16,7 +16,7 @@ public class TypeDemandeConfig {
             TypeDemandeRepository typeDemandeRepository){
         return args -> {
 
-            TypeDemande type1 = new TypeDemande("à distance");
+            TypeDemande type1 = new TypeDemande("À distance");
             TypeDemande type2 = new TypeDemande("Congé");
             TypeDemande type3 = new TypeDemande("Présentiel");
 
