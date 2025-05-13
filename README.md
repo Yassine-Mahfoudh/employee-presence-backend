@@ -22,7 +22,7 @@ src/main/resources – configuration (application.properties)
 
 ##  Lancer le projet
 ```bash
-git clone https://github.com/Yassine-Mahfoudh/employee-presence-backend
+git clone https://github.com/Yassine-Mahfoudh/employee-presence-backend.git
 cd employee-presence-backend
 mvn spring-boot:run
 ```
