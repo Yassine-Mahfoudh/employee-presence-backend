@@ -25,4 +25,8 @@ src/main/resources – configuration (application.properties)
 git clone https://github.com/ton-profil/employee-presence-backend
 cd employee-presence-backend
 mvn spring-boot:run
+```
+
+## Auteur
+Yassine Mahfoudh
 
